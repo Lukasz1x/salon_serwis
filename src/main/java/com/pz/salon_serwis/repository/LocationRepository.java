@@ -3,11 +3,12 @@ package com.pz.salon_serwis.repository;
 import com.pz.salon_serwis.model.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Integer> {
 
-    Location findById(int id);
+    Optional<Location> findById(int id);
     void addLocation(Location location);
     void deleteById(int id);
 }

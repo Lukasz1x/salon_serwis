@@ -9,7 +9,6 @@ import java.util.Optional;
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, String> {
 
-    //TODO usunąć optional? jest tu na razie tylko dlatego, żeby nie sypało błędami
     Optional<Invoice> findById(String id);
     void addInvoice(Invoice invoice);
     void deleteById(String id);
