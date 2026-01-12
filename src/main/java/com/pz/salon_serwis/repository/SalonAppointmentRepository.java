@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SalonAppointmentRepository extends JpaRepository<SalonAppointment, Integer> {
+
+    SalonAppointment findById(int id);
+    void addSalonAppointment(SalonAppointment salonAppointment);
+    void deleteById(int id);
 }

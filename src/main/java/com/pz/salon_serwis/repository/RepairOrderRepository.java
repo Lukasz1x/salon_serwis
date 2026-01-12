@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RepairOrderRepository extends JpaRepository<RepairOrder, Integer> {
+
+    RepairOrder findById(int id);
+    void addRepairOrder(RepairOrder repairOrder);
+    void deleteById(int id);
 }

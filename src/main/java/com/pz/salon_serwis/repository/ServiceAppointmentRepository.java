@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ServiceAppointmentRepository extends JpaRepository<ServiceAppointment, Integer> {
+
+    ServiceAppointment findById(int id);
+    void addServiceAppointment(ServiceAppointment serviceAppointment);
+    void deleteById(int id);
 }

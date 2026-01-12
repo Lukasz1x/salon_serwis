@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SalesOrderRepository extends JpaRepository<SalesOrder, Integer> {
+
+    SalesOrder findById(int id);
+    void addSalesOrder(SalesOrder salesOrder);
+    void deleteById(int id);
 }
