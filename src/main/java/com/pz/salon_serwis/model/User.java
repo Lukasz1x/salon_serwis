@@ -45,8 +45,7 @@ public class User {
         this.isActive = true;
     }
 
-    public User(Integer id, String lastName, String firstName, String email, String hashedPassword, UserRole role, Location location, LocalDateTime createdAt, boolean isActive, String phone) {
-        this.id = id;
+    public User(String lastName, String firstName, String email, String hashedPassword, UserRole role, Location location, LocalDateTime createdAt, boolean isActive, String phone) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.phone = phone;

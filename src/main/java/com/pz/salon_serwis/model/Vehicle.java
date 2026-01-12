@@ -64,8 +64,7 @@ public class Vehicle {
         this.isActive = true;
     }
 
-    public Vehicle(Integer id, String model, Integer productionYear, String vin, BigDecimal cataloguePrice, BigDecimal marginPrice, Location location, LocalDateTime addedAt, VehicleStatus status, boolean isActive) {
-        this.id = id;
+    public Vehicle(String model, Integer productionYear, String vin, BigDecimal cataloguePrice, BigDecimal marginPrice, Location location, LocalDateTime addedAt, VehicleStatus status, boolean isActive) {
         this.model = model;
         this.productionYear = productionYear;
         this.vin = vin;

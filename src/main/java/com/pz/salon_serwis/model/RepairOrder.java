@@ -44,8 +44,7 @@ public class RepairOrder {
 
     public RepairOrder() {}
 
-    public RepairOrder(Integer id, ServiceAppointment serviceAppointment, User mechanic, Map<String, BigDecimal> workDescription, LocalDateTime orderedAt, boolean isActive) {
-        this.id = id;
+    public RepairOrder(ServiceAppointment serviceAppointment, User mechanic, Map<String, BigDecimal> workDescription, LocalDateTime orderedAt, boolean isActive) {
         this.serviceAppointment = serviceAppointment;
         this.mechanic = mechanic;
         this.workDescription = workDescription;

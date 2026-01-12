@@ -43,7 +43,7 @@ public class Location {
         this.isActive = true;
     }
 
-    public Location(boolean isActive, LocationType locationType, BigDecimal longitude, BigDecimal latitude, String zipCode, String city, String street, String phone, String lastName, Integer id) {
+    public Location(boolean isActive, LocationType locationType, BigDecimal longitude, BigDecimal latitude, String zipCode, String city, String street, String phone, String lastName) {
         this.isActive = isActive;
         this.locationType = locationType;
         this.longitude = longitude;
@@ -53,7 +53,6 @@ public class Location {
         this.street = street;
         this.phone = phone;
         this.name = lastName;
-        this.id = id;
     }
 
     public Location() {}

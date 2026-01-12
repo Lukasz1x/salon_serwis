@@ -55,8 +55,7 @@ public class SalonAppointment {
 
     public SalonAppointment() {}
 
-    public SalonAppointment(Integer id, User client, User employee, Location location, LocalDateTime appointmentDate, SalonAppointmentType type, SalonAppointmentStatus status, Boolean isActive) {
-        this.id = id;
+    public SalonAppointment(User client, User employee, Location location, LocalDateTime appointmentDate, SalonAppointmentType type, SalonAppointmentStatus status, Boolean isActive) {
         this.client = client;
         this.employee = employee;
         this.location = location;

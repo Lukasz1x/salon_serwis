@@ -36,8 +36,7 @@ public class SalesOrder {
 
     public SalesOrder() {}
 
-    public SalesOrder(Integer id, User client, User employee, LocalDateTime saleDate, BigDecimal finalPrice, boolean isActive) {
-        this.id = id;
+    public SalesOrder(User client, User employee, LocalDateTime saleDate, BigDecimal finalPrice, boolean isActive) {
         this.client = client;
         this.employee = employee;
         this.saleDate = saleDate;

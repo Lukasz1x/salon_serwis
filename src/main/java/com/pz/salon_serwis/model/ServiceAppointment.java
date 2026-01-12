@@ -50,8 +50,7 @@ public class ServiceAppointment {
 
     public ServiceAppointment() {}
 
-    public ServiceAppointment(Integer id, User client, Vehicle vehicle, Location location, ServiceType serviceType, LocalDateTime appointmentDate, ServiceStatus serviceStatus, boolean isActive) {
-        this.id = id;
+    public ServiceAppointment(User client, Vehicle vehicle, Location location, ServiceType serviceType, LocalDateTime appointmentDate, ServiceStatus serviceStatus, boolean isActive) {
         this.client = client;
         this.vehicle = vehicle;
         this.location = location;

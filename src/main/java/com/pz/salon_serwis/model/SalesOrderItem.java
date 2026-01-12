@@ -32,8 +32,7 @@ public class SalesOrderItem {
 
     public SalesOrderItem() {}
 
-    public SalesOrderItem(Integer id, SalesOrder order, Vehicle vehicle, BigDecimal price, boolean isActive) {
-        this.id = id;
+    public SalesOrderItem(SalesOrder order, Vehicle vehicle, BigDecimal price, boolean isActive) {
         this.order = order;
         this.vehicle = vehicle;
         this.price = price;
