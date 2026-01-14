@@ -1,7 +1,6 @@
 package com.pz.salon_serwis.service;
 
 import com.pz.salon_serwis.model.SalonAppointment;
-import com.pz.salon_serwis.model.SalonAppointmentStatus;
 import com.pz.salon_serwis.model.SalonAppointmentType;
 
 import java.time.LocalDateTime;

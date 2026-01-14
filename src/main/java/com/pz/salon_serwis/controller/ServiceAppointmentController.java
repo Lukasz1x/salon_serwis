@@ -1,6 +1,5 @@
 package com.pz.salon_serwis.controller;
 
-import com.pz.salon_serwis.dto.SalonAppointmentRequest;
 import com.pz.salon_serwis.dto.ServiceAppointmentRequest;
 import com.pz.salon_serwis.model.ServiceAppointment;
 import com.pz.salon_serwis.service.ServiceAppointmentService;

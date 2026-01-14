@@ -1,7 +1,6 @@
 package com.pz.salon_serwis.dto;
 
 import com.pz.salon_serwis.model.ServiceType;
-
 import java.time.LocalDateTime;
 
 public class ServiceAppointmentRequest {

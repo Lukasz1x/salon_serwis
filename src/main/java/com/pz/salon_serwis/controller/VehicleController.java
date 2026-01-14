@@ -1,13 +1,12 @@
 package com.pz.salon_serwis.controller;
 
+
+import com.pz.salon_serwis.dto.VehicleRequest;
 import com.pz.salon_serwis.model.Vehicle;
 import com.pz.salon_serwis.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +25,25 @@ public class VehicleController {
     {
         List<Vehicle> vehicles = vehicleService.findVehiclesByLocationId(id);
         return ResponseEntity.ok(vehicles);
+    }
+
+    @PostMapping("add")
+    public ResponseEntity<?> addVehicle(@RequestBody VehicleRequest vehicleRequest)
+    {
+        try
+        {
+            Vehicle vehicle = vehicleService.addVehicle(
+                    vehicleRequest.getModel(),
+                    vehicleRequest.getProductionYear(),
+                    vehicleRequest.getVin(),
+                    vehicleRequest.getCataloguePrice(),
+                    vehicleRequest.getMarginPrice(),
+                    vehicleRequest.getLocation(),
+                    vehicleRequest.getStatus()
+            );
+            return ResponseEntity.ok(vehicle);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
+        }
     }
 }
