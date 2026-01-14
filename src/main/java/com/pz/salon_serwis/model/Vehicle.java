@@ -61,6 +61,7 @@ public class Vehicle {
 
     @PrePersist
     protected void onCreate() {
+        this.lastStatusChange = LocalDateTime.now();
         this.isActive = true;
     }
 

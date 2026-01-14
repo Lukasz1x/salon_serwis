@@ -45,6 +45,7 @@ public class ServiceAppointment {
     @PrePersist
     protected void onCreate() {
         this.serviceStatus = ServiceStatus.SCHEDULED;
+        this.lastStatusChange = LocalDateTime.now();
         this.isActive = true;
     }
 

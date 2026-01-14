@@ -50,6 +50,7 @@ public class SalonAppointment {
     @PrePersist
     protected void onCreate() {
         this.status = SalonAppointmentStatus.SCHEDULED;
+        this.lastStatusChange = LocalDateTime.now();
         this.isActive = true;
     }
 
