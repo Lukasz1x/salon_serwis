@@ -9,6 +9,5 @@ import java.util.Optional;
 public interface LocationRepository extends JpaRepository<Location, Integer> {
 
     Optional<Location> findById(int id);
-    void addLocation(Location location);
     void deleteById(int id);
 }

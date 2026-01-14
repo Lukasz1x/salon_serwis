@@ -12,6 +12,5 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 
     Optional<Vehicle> findById(int id);
     List<Vehicle> findByLocationId(int id);
-    void addVehicle(Vehicle vehicle);
     void deleteById(int id);
 }

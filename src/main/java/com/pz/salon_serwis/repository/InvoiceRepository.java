@@ -10,6 +10,5 @@ import java.util.Optional;
 public interface InvoiceRepository extends JpaRepository<Invoice, String> {
 
     Optional<Invoice> findById(String id);
-    void addInvoice(Invoice invoice);
     void deleteById(String id);
 }

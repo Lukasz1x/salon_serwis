@@ -9,6 +9,5 @@ import java.util.Optional;
 public interface RepairOrderRepository extends JpaRepository<RepairOrder, Integer> {
 
     Optional<RepairOrder> findById(int id);
-    void addRepairOrder(RepairOrder repairOrder);
     void deleteById(int id);
 }
