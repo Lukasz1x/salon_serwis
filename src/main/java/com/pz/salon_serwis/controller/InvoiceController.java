@@ -1,10 +1,7 @@
 package com.pz.salon_serwis.controller;
 
-import com.pz.salon_serwis.dto.InvoiceRquest;
-import com.pz.salon_serwis.dto.SalonAppointmentRequest;
+import com.pz.salon_serwis.dto.InvoiceRequest;
 import com.pz.salon_serwis.model.Invoice;
-import com.pz.salon_serwis.model.SalonAppointment;
-import com.pz.salon_serwis.repository.InvoiceRepository;
 import com.pz.salon_serwis.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +21,14 @@ public class InvoiceController {
     }
 
     @PostMapping("generate")
-    public ResponseEntity<?> generateInvoice(@RequestBody InvoiceRquest invoiceRquest) {
+    public ResponseEntity<?> generateInvoice(@RequestBody InvoiceRequest invoiceRequest) {
         try
         {
             Invoice invoice = invoiceService.generateInvoice(
-                    invoiceRquest.getId(),
-                    invoiceRquest.getClientId(),
-                    invoiceRquest.getDueDate(),
-                    invoiceRquest.getTotalAmount()
+                    invoiceRequest.getId(),
+                    invoiceRequest.getClientId(),
+                    invoiceRequest.getDueDate(),
+                    invoiceRequest.getTotalAmount()
             );
             if (invoice == null)
             {

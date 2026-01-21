@@ -3,13 +3,13 @@ package com.pz.salon_serwis.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class InvoiceRquest {
+public class InvoiceRequest {
     private String id;
     private int clientId;
     private LocalDate dueDate;
     private BigDecimal totalAmount;
 
-    public InvoiceRquest(String id, int clientId, LocalDate dueDate, BigDecimal totalAmount) {
+    public InvoiceRequest(String id, int clientId, LocalDate dueDate, BigDecimal totalAmount) {
         this.id = id;
         this.clientId = clientId;
         this.dueDate = dueDate;
