@@ -27,13 +27,13 @@ public class RepairOrderController {
                     repairOrderRequest.getAppointmentId(),
                     repairOrderRequest.getMechanicId()
             );
-            if (repairOrder != null){
+            if (repairOrder == null){
                 return ResponseEntity.badRequest().body("Error: Cannot generate repairOrder");
             }
+            return ResponseEntity.ok(repairOrder);
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
-        return null;
     }
 
 }
