@@ -3,6 +3,9 @@ package com.pz.salon_serwis.repository;
 import com.pz.salon_serwis.model.RepairOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -10,4 +13,5 @@ public interface RepairOrderRepository extends JpaRepository<RepairOrder, Intege
 
     Optional<RepairOrder> findById(int id);
     void deleteById(int id);
+    Optional<List<RepairOrder>> findAllByOrderedAtBetween(LocalDateTime startDate, LocalDateTime endDate);
 }

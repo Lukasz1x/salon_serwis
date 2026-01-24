@@ -40,7 +40,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     public List<SalesOrder> getSalesOrdersBetweenDates(LocalDateTime beginDate, LocalDateTime endDate) {
         List<SalesOrder> salesOrders = new ArrayList<>();
         salesOrderRepository.findAllBySaleDateBetween(beginDate, endDate)
-                .forEach(x -> x.ifPresent(salesOrders::add));
+                .ifPresent(salesOrders::addAll);
 
         return salesOrders;
     }

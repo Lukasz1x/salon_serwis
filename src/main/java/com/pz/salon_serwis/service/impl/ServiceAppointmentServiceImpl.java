@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,5 +55,13 @@ public class ServiceAppointmentServiceImpl implements ServiceAppointmentService 
         }
         return null;
 
+    }
+
+    @Override
+    public List<ServiceAppointment> findAllByAppointmentDateBetween(LocalDateTime beginDate, LocalDateTime endDate) {
+        List<ServiceAppointment> serviceAppointments = new ArrayList<>();
+        serviceAppointmentRepository.findAllByAppointmentDateBetween(beginDate, endDate)
+                .ifPresent(serviceAppointments::addAll);
+        return serviceAppointments;
     }
 }

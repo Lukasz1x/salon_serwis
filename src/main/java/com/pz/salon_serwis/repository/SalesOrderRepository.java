@@ -13,5 +13,5 @@ public interface SalesOrderRepository extends JpaRepository<SalesOrder, Integer>
 
     Optional<SalesOrder> findById(int id);
     void deleteById(int id);
-    List<Optional<SalesOrder>> findAllBySaleDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+    Optional<List<SalesOrder>> findAllBySaleDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 }

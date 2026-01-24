@@ -63,7 +63,7 @@ public class SalonAppointmentServiceImpl implements SalonAppointmentService {
     public List<SalonAppointment> getSalonAppointmentsBetween(LocalDateTime startDate, LocalDateTime endDate) {
         List<SalonAppointment> salonAppointments = new ArrayList<>();
         salonAppointmentRepository.findAllByAppointmentDateBetween(startDate, endDate)
-                .forEach(x -> x.ifPresent(salonAppointments::add));
+                .ifPresent(salonAppointments::addAll);
         return salonAppointments;
     }
 }
