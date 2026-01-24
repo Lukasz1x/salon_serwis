@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,4 +35,14 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         }
         return null;
     }
+
+    @Override
+    public List<SalesOrder> getSalesOrdersBetweenDates(LocalDateTime beginDate, LocalDateTime endDate) {
+        List<SalesOrder> salesOrders = new ArrayList<>();
+        salesOrderRepository.findAllBySaleDateBetween(beginDate, endDate)
+                .forEach(x -> x.ifPresent(salesOrders::add));
+
+        return salesOrders;
+    }
+
 }
