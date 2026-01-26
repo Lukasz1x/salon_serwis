@@ -1,6 +1,9 @@
 package com.pz.salon_serwis.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,6 +29,7 @@ public class User {
     private String hashedPassword;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "role", nullable = false)
     private UserRole role;
 
