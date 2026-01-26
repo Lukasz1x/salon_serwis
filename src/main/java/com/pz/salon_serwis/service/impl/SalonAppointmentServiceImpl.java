@@ -45,10 +45,7 @@ public class SalonAppointmentServiceImpl implements SalonAppointmentService {
             if(vehicleId!=null)
             {
                 Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
-                if(vehicle.isPresent())
-                {
-                    salonAppointment.setVehicle(vehicle.get());
-                }
+                vehicle.ifPresent(salonAppointment::setVehicle);
             }else
             {
                 salonAppointment.setVehicle(null);

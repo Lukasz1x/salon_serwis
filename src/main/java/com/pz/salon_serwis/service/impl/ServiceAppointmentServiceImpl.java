@@ -39,16 +39,8 @@ public class ServiceAppointmentServiceImpl implements ServiceAppointmentService 
 
         if(client.isPresent() && vehicle.isPresent() && location.isPresent())
         {
-            //(User client, Vehicle vehicle, Location location, ServiceType serviceType, LocalDateTime appointmentDate, ServiceStatus serviceStatus, boolean isActive)
-            ServiceAppointment serviceAppointment = new ServiceAppointment();
-            serviceAppointment.setClient(client.get());
-            serviceAppointment.setVehicle(vehicle.get());
-            serviceAppointment.setLocation(location.get());
-            serviceAppointment.setServiceType(type);
+            ServiceAppointment serviceAppointment = new ServiceAppointment(client.get(), vehicle.get(), location.get(), type, appointmentDate, ServiceStatus.SCHEDULED, true);
             serviceAppointment.setIssueDescription(issueDescription);
-            serviceAppointment.setAppointmentDate(appointmentDate);
-            serviceAppointment.setServiceStatus(ServiceStatus.SCHEDULED);
-            serviceAppointment.setActive(true);
             serviceAppointment.setLastStatusChange(LocalDateTime.now());
             return serviceAppointmentRepository.save(serviceAppointment);
 

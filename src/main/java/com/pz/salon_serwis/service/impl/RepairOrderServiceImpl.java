@@ -9,7 +9,6 @@ import com.pz.salon_serwis.repository.UserRepository;
 import com.pz.salon_serwis.service.RepairOrderService;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -34,7 +33,7 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         Optional<User> mechanic = userRepository.findById(mechanicId);
 
         if (serviceAppointment.isPresent() && mechanic.isPresent()){
-            RepairOrder repairOrder = new RepairOrder(serviceAppointment.get(), mechanic.get(), new HashMap<String, BigDecimal>() , serviceAppointment.get().getAppointmentDate(),true);
+            RepairOrder repairOrder = new RepairOrder(serviceAppointment.get(), mechanic.get(), new HashMap<>() , serviceAppointment.get().getAppointmentDate(),true);
             return  repairOrderRepository.save(repairOrder);
         }
         return null;
