@@ -20,7 +20,7 @@ public class RepairOrderController {
         this.repairOrderService = repairOrderService;
     }
 
-    @PostMapping("generate")
+    @PostMapping("/generate")
     public ResponseEntity<?> generateRepairOrder(@RequestBody RepairOrderRequest repairOrderRequest) {
         try{
             RepairOrder repairOrder = repairOrderService.generateRepairOrder(

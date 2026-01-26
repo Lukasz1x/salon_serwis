@@ -20,14 +20,19 @@ public class SalesOrderController {
         this.salesOrderService = salesOrderService;
     }
 
-    @PostMapping("generate")
+    @PostMapping("/generate")
     public ResponseEntity<?> generateSalesOrder(@RequestBody SalesOrderRequest salesOrderRequest) {
         try{
+            System.out.println("VehicleIds");
+            for(Integer id : salesOrderRequest.getVehiclesIds()){
+                System.out.println(id);
+            }
+            System.out.println("koniec");
             SalesOrder salesOrder = salesOrderService.generateSalesOrder(
                     salesOrderRequest.getClientId(),
                     salesOrderRequest.getEmployeeId(),
-                    salesOrderRequest.getSaleDate(),
-                    salesOrderRequest.getPrice()
+                    salesOrderRequest.getVehiclesIds(),
+                    salesOrderRequest.getSaleDate()
             );
             if (salesOrder == null) {
                 return ResponseEntity.badRequest().body("Error: Cannot generate SalesOrder");

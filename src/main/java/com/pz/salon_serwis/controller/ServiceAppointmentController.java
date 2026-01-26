@@ -20,7 +20,7 @@ public class ServiceAppointmentController {
         this.serviceAppointmentService = serviceAppointmentService;
     }
 
-    @PostMapping("arrange")
+    @PostMapping("/arrange")
     public ResponseEntity<?> arrangeAppointment(@RequestBody ServiceAppointmentRequest serviceAppointmentRequest)
     {
         try

@@ -31,20 +31,13 @@ public class SalonReportController {
         this.salonOrderService = salonOrderService;
     }
 
-    // LocalDateTime? or change for string to parse?
-    @GetMapping("get/beginDate={beginDate}&endDate={endDate}")
+    @GetMapping("/get/beginDate={beginDate}&endDate={endDate}")
     public ResponseEntity<?> getSalonReport(@PathVariable LocalDateTime beginDate, @PathVariable LocalDateTime endDate) {
         try {
         JSONObject response = new JSONObject();
-
         response.put("beginDate", beginDate);
         response.put("endDate", endDate);
 
-        /*
-          countOfIndividual appointments
-          Top 3 of most purchased vehicles
-          Top 3 of location by sales
-          */
         List<SalesOrder> salonOrders = salonOrderService.getSalesOrdersBetweenDates(beginDate, endDate);
         List<SalonAppointment> salonAppointments = salonAppointmentService.getSalonAppointmentsBetween(beginDate, endDate);
 
@@ -58,7 +51,7 @@ public class SalonReportController {
             countOfSalesOrders.compareAndSet(currentCount, currentCount.add(BigDecimal.ONE));
 
             BigDecimal currentPrice = sumOfFinalPrices.get();
-            countOfSalesOrders.compareAndSet(currentPrice, currentPrice.add(salesOrder.getFinalPrice()));
+            sumOfFinalPrices.compareAndSet(currentPrice, currentPrice.add(salesOrder.getFinalPrice()));
         });
 
         salonAppointments.forEach(salonAppointment -> {
@@ -71,7 +64,6 @@ public class SalonReportController {
         response.put("sumOfFinalPrices", sumOfFinalPrices.get());
         response.put("salonAppointments", salonAppointments);
 
-        // or without toString
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
         } catch (Exception e){
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());

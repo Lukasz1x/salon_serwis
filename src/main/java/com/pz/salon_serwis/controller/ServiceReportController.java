@@ -3,7 +3,6 @@ package com.pz.salon_serwis.controller;
 
 import com.pz.salon_serwis.model.ServiceAppointment;
 import com.pz.salon_serwis.model.ServiceStatus;
-import com.pz.salon_serwis.service.RepairOrderService;
 import com.pz.salon_serwis.service.ServiceAppointmentService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,27 +21,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RequestMapping("api/serviceReport")
 public class ServiceReportController {
     private final ServiceAppointmentService serviceAppointmentService;
-    private final RepairOrderService repairOrderService;
 
     @Autowired
-    public ServiceReportController(ServiceAppointmentService serviceAppointmentService, RepairOrderService repairOrderService) {
+    public ServiceReportController(ServiceAppointmentService serviceAppointmentService) {
         this.serviceAppointmentService = serviceAppointmentService;
-        this.repairOrderService = repairOrderService;
     }
 
-    // LocalDateTime? or change for string to parse? again
-    @GetMapping("get/beginDate={beginDate}&endDate={endDate}")
+    @GetMapping("/get/beginDate={beginDate}&endDate={endDate}")
     public ResponseEntity<?> getServiceReport(@PathVariable LocalDateTime beginDate, @PathVariable LocalDateTime endDate) {
         try {
             JSONObject response = new JSONObject();
             response.put("beginDate", beginDate);
             response.put("endDate", endDate);
-
-            /*
-
-                total costs?
-                sum of prices from invoices
-             */
 
             List<ServiceAppointment> serviceAppointments =  serviceAppointmentService.findAllByAppointmentDateBetween(beginDate, endDate);
 

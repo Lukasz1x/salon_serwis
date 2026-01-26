@@ -20,7 +20,7 @@ public class SalonAppointmentController {
         this.salonAppointmentService = salonAppointmentService;
     }
 
-    @PostMapping("arrange")
+    @PostMapping("/arrange")
     public ResponseEntity<?> arrangeAppointment(@RequestBody SalonAppointmentRequest salonAppointmentRequest)
     {
         try

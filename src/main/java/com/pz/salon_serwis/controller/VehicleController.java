@@ -20,14 +20,14 @@ public class VehicleController {
         this.vehicleService = vehicleService;
     }
 
-    @GetMapping("location={id}")
+    @GetMapping("/location={id}")
     public ResponseEntity<List<Vehicle>> findVehiclesByLocationId(@PathVariable int id)
     {
         List<Vehicle> vehicles = vehicleService.findVehiclesByLocationId(id);
         return ResponseEntity.ok(vehicles);
     }
 
-    @PostMapping("add")
+    @PostMapping("/add")
     public ResponseEntity<?> addVehicle(@RequestBody VehicleRequest vehicleRequest)
     {
         try
@@ -38,12 +38,21 @@ public class VehicleController {
                     vehicleRequest.getVin(),
                     vehicleRequest.getCataloguePrice(),
                     vehicleRequest.getMarginPrice(),
-                    vehicleRequest.getLocation(),
+                    vehicleRequest.getLocationId(),
                     vehicleRequest.getStatus()
             );
-            return ResponseEntity.ok(vehicle);
+            if(vehicle != null){
+                return ResponseEntity.ok(vehicle);
+            }else{
+                return ResponseEntity.badRequest().build();
+            }
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteVehicleById(@PathVariable int id){
+        return vehicleService.deleteById(id) ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 }
