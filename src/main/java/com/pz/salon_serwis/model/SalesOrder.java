@@ -1,9 +1,11 @@
 package com.pz.salon_serwis.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "sales_orders")
@@ -28,6 +30,10 @@ public class SalesOrder {
 
     @Column(columnDefinition = "BOOLEAN", name = "is_active", nullable = false)
     private boolean isActive;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
+    @JsonIgnore
+    private Set<SalesOrderItem> items;
 
     @PrePersist
     protected void onCreate() {
@@ -90,5 +96,13 @@ public class SalesOrder {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public Set<SalesOrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<SalesOrderItem> items) {
+        this.items = items;
     }
 }

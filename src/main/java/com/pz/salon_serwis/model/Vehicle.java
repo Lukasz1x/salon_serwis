@@ -7,7 +7,6 @@ import org.hibernate.type.SqlTypes;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Objects;
 
 @Entity
 @Table(name = "vehicles")
@@ -50,7 +49,8 @@ public class Vehicle {
     private LocalDateTime addedAt;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "status", nullable = false)
     private VehicleStatus status;
 
     @Column(name = "last_status_change")

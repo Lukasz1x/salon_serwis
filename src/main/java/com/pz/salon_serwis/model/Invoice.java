@@ -42,12 +42,23 @@ public class Invoice {
 
     public Invoice() {}
 
-    public Invoice(String id, User client, LocalDate issueDate, LocalDate dueDate, BigDecimal totalAmount, boolean isActive) {
+    public Invoice(String id, User client, LocalDate issueDate, LocalDate dueDate, BigDecimal totalAmount, SalesOrder salesOrder, boolean isActive) {
         this.id = id;
         this.client = client;
         this.issueDate = issueDate;
         this.dueDate = dueDate;
         this.totalAmount = totalAmount;
+        this.salesOrder = salesOrder;
+        this.isActive = isActive;
+    }
+
+    public Invoice(String id, User client, LocalDate issueDate, LocalDate dueDate, BigDecimal totalAmount, RepairOrder repairOrder, boolean isActive) {
+        this.id = id;
+        this.client = client;
+        this.issueDate = issueDate;
+        this.dueDate = dueDate;
+        this.totalAmount = totalAmount;
+        this.repairOrder = repairOrder;
         this.isActive = isActive;
     }
 

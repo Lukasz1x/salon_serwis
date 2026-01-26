@@ -1,6 +1,9 @@
 package com.pz.salon_serwis.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,6 +26,7 @@ public class ServiceAppointment {
     private Location location;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "type", nullable = false)
     private ServiceType serviceType;
 
@@ -33,6 +37,7 @@ public class ServiceAppointment {
     private LocalDateTime appointmentDate;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "status", nullable = false)
     private ServiceStatus serviceStatus;
 
