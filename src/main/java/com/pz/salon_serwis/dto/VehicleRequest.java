@@ -1,6 +1,5 @@
 package com.pz.salon_serwis.dto;
 
-import com.pz.salon_serwis.model.Location;
 import com.pz.salon_serwis.model.VehicleStatus;
 
 import java.math.BigDecimal;
@@ -11,16 +10,16 @@ public class VehicleRequest {
     private String vin;
     private BigDecimal cataloguePrice;
     private BigDecimal marginPrice;
-    private Location location;
+    private Integer locationId;
     private VehicleStatus status;
 
-    public VehicleRequest(String model, Integer productionYear, String vin, BigDecimal cataloguePrice, BigDecimal marginPrice, Location location, VehicleStatus status) {
+    public VehicleRequest(String model, Integer productionYear, String vin, BigDecimal cataloguePrice, BigDecimal marginPrice, Integer locationId, VehicleStatus status) {
         this.model = model;
         this.productionYear = productionYear;
         this.vin = vin;
         this.cataloguePrice = cataloguePrice;
         this.marginPrice = marginPrice;
-        this.location = location;
+        this.locationId = locationId;
         this.status = status;
     }
 
@@ -64,12 +63,12 @@ public class VehicleRequest {
         this.marginPrice = marginPrice;
     }
 
-    public Location getLocation() {
-        return location;
+    public Integer getLocationId() {
+        return locationId;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
     }
 
     public VehicleStatus getStatus() {

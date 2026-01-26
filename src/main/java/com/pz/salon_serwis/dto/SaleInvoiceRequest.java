@@ -3,17 +3,17 @@ package com.pz.salon_serwis.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class InvoiceRequest {
+public class SaleInvoiceRequest {
     private String id;
     private int clientId;
-    private int serviceId;
+    private int saleOrderId;
     private LocalDate dueDate;
     private BigDecimal totalAmount;
 
-    public InvoiceRequest(String id, int clientId, int serviceId, LocalDate dueDate, BigDecimal totalAmount) {
+    public SaleInvoiceRequest(String id, int clientId, int saleOrderId, LocalDate dueDate, BigDecimal totalAmount) {
         this.id = id;
         this.clientId = clientId;
-        this.serviceId = serviceId;
+        this.saleOrderId = saleOrderId;
         this.dueDate = dueDate;
         this.totalAmount = totalAmount;
     }
@@ -34,12 +34,12 @@ public class InvoiceRequest {
         this.clientId = clientId;
     }
 
-    public int getServiceId() {
-        return serviceId;
+    public int getSaleOrderId() {
+        return saleOrderId;
     }
 
-    public void setServiceId(int serviceId) {
-        this.serviceId = serviceId;
+    public void setSaleOrderId(int saleOrderId) {
+        this.saleOrderId = saleOrderId;
     }
 
     public LocalDate getDueDate() {
