@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ServiceAppointmentService {
-    public ServiceAppointment arrangeService(int clientId, int vehicleId, int locationId,
+    ServiceAppointment arrangeService(int clientId, int vehicleId, int locationId,
                                               ServiceType type, String issueDescription,
                                               LocalDateTime appointmentDate);
     List<ServiceAppointment> findAllByAppointmentDateBetween(LocalDateTime beginDate, LocalDateTime endDate);
