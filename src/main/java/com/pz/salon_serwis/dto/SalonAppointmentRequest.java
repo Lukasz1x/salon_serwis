@@ -4,7 +4,6 @@ import com.pz.salon_serwis.model.SalonAppointmentType;
 import java.time.LocalDateTime;
 
 public class SalonAppointmentRequest {
-    private int clientId;
     private int employeeId;
     private int locationId;
     private Integer vehicleId;
@@ -12,22 +11,13 @@ public class SalonAppointmentRequest {
     private LocalDateTime appointmentDate;
     private String notes;
 
-    public SalonAppointmentRequest(int locationId, int clientId, int employeeId, Integer vehicleId, SalonAppointmentType type, LocalDateTime appointmentDate, String notes) {
+    public SalonAppointmentRequest(int locationId, int employeeId, Integer vehicleId, SalonAppointmentType type, LocalDateTime appointmentDate, String notes) {
         this.locationId = locationId;
-        this.clientId = clientId;
         this.employeeId = employeeId;
         this.vehicleId = vehicleId;
         this.type = type;
         this.appointmentDate = appointmentDate;
         this.notes = notes;
-    }
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
     }
 
     public int getEmployeeId() {

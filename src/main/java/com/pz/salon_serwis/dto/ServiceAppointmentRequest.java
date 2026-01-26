@@ -4,28 +4,18 @@ import com.pz.salon_serwis.model.ServiceType;
 import java.time.LocalDateTime;
 
 public class ServiceAppointmentRequest {
-    private int clientId;
     private int vehicleId;
     private int locationId;
     private ServiceType type;
     private String issueDescription;
     private LocalDateTime appointmentDate;
 
-    public ServiceAppointmentRequest(int clientId, int vehicleId, int locationId, String issueDescription, ServiceType type, LocalDateTime appointmentDate) {
-        this.clientId = clientId;
+    public ServiceAppointmentRequest(int vehicleId, int locationId, String issueDescription, ServiceType type, LocalDateTime appointmentDate) {
         this.vehicleId = vehicleId;
         this.locationId = locationId;
         this.issueDescription = issueDescription;
         this.type = type;
         this.appointmentDate = appointmentDate;
-    }
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
     }
 
     public int getVehicleId() {

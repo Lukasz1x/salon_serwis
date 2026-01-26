@@ -5,14 +5,12 @@ import java.time.LocalDate;
 
 public class SaleInvoiceRequest {
     private String id;
-    private int clientId;
     private int saleOrderId;
     private LocalDate dueDate;
     private BigDecimal totalAmount;
 
-    public SaleInvoiceRequest(String id, int clientId, int saleOrderId, LocalDate dueDate, BigDecimal totalAmount) {
+    public SaleInvoiceRequest(String id, int saleOrderId, LocalDate dueDate, BigDecimal totalAmount) {
         this.id = id;
-        this.clientId = clientId;
         this.saleOrderId = saleOrderId;
         this.dueDate = dueDate;
         this.totalAmount = totalAmount;
@@ -24,14 +22,6 @@ public class SaleInvoiceRequest {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
     }
 
     public int getSaleOrderId() {
