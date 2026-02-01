@@ -13,5 +13,5 @@ public interface UserService {
     void deleteById(int id);
     List<User> getUsers();
     User changeRole(int userId, String roleName);
-    User vestLocation(int userId, int locationId);
+    User changeLocation(int userId, Integer locationId);
 }

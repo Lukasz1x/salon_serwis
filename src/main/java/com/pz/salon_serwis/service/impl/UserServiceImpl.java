@@ -82,13 +82,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User vestLocation(int userId, int locationId) {
+    public User changeLocation(int userId, Integer locationId) {
         Optional<User> user = userRepository.findById(userId);
-        Optional<Location> location = locationRepository.findById(locationId);
-        if(user.isPresent() && location.isPresent()){
+        if(user.isPresent()){
             if(user.get().isActive()){
-                user.get().setLocation(location.get());
-                return userRepository.save(user.get());
+                if(locationId == null && user.get().getRole().equals(UserRole.CLIENT)) {
+                    user.get().setLocation(null);
+                    return userRepository.save(user.get());
+                }else if(locationId != null){
+                    Optional<Location> location = locationRepository.findById(locationId);
+                    if(location.isPresent()){
+                        user.get().setLocation(location.get());
+                        return userRepository.save(user.get());
+                    }
+                }
+
             }
         }
         return null;

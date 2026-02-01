@@ -48,9 +48,9 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/vestLocation={locationId}&userId={userId}")
-    public ResponseEntity<?> vestLocation(@PathVariable int locationId, @PathVariable int userId){
-        User user = userService.vestLocation(userId, locationId);
+    @PutMapping("/changeLocation")
+    public ResponseEntity<?> changeLocation(@RequestParam int userId, @RequestParam(required = false) Integer locationId){
+        User user = userService.changeLocation(userId, locationId);
         if(user != null){
             return ResponseEntity.ok(user);
         }
