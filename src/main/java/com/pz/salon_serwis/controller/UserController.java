@@ -41,12 +41,18 @@ public class UserController {
 
     @PutMapping("/changeRole={roleName}&userId={userId}")
     public ResponseEntity<?> changeUserRole(@PathVariable String roleName, @PathVariable int userId){
-        Optional<User> user = userService.findById(userId);
-        if(user.isPresent()){
-            if(user.get().isActive()){
-                userService.changeRole(userId, roleName);
-                return ResponseEntity.ok(user.get());
-            }
+        User user = userService.changeRole(userId, roleName);
+        if(user != null){
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/vestLocation={locationId}&userId={userId}")
+    public ResponseEntity<?> vestLocation(@PathVariable int locationId, @PathVariable int userId){
+        User user = userService.vestLocation(userId, locationId);
+        if(user != null){
+            return ResponseEntity.ok(user);
         }
         return ResponseEntity.notFound().build();
     }
