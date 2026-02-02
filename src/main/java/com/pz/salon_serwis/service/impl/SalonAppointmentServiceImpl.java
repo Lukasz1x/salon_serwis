@@ -57,6 +57,17 @@ public class SalonAppointmentServiceImpl implements SalonAppointmentService {
     }
 
     @Override
+    public SalonAppointment changeStatus(int salonAppointmentId, String status) {
+        Optional<SalonAppointment> salonAppointment = salonAppointmentRepository.findById(salonAppointmentId);
+        if(salonAppointment.isPresent()){
+            salonAppointment.get().setStatus(SalonAppointmentStatus.valueOf(status));
+            salonAppointment.get().setLastStatusChange(LocalDateTime.now());
+            return salonAppointmentRepository.save(salonAppointment.get());
+        }
+        return null;
+    }
+
+    @Override
     public List<SalonAppointment> getSalonAppointmentsBetween(LocalDateTime startDate, LocalDateTime endDate) {
         List<SalonAppointment> salonAppointments = new ArrayList<>();
         salonAppointmentRepository.findAllByAppointmentDateBetween(startDate, endDate)

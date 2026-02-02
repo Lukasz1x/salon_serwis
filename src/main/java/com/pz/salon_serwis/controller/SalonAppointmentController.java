@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -52,5 +49,18 @@ public class SalonAppointmentController {
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
         return ResponseEntity.badRequest().body("Error: Employee/location not found");
+    }
+
+    @PutMapping("/changeStatus={status}&appointmentId={salonAppointmentId}")
+    public ResponseEntity<?> changeStatus(@PathVariable String status, @PathVariable int salonAppointmentId){
+        try{
+            SalonAppointment salonAppointment = salonAppointmentService.changeStatus(salonAppointmentId, status);
+            if(salonAppointment != null){
+                return ResponseEntity.ok(salonAppointment);
+            }
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 }
