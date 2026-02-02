@@ -33,13 +33,14 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Override
     @Transactional
     public SalesOrder generateSalesOrder(int clientId, int employeeId, Set<Integer> vehicleIds, LocalDateTime saleDate) {
-        Optional<User> user = userRepository.findById(clientId);
+        Optional<User> client = userRepository.findById(clientId);
         Optional<User> employee = userRepository.findById(employeeId);
-        BigDecimal price = BigDecimal.valueOf(0);
-        Set<SalesOrderItem> salesOrderItems = new HashSet<>();
 
-        if (user.isPresent() && employee.isPresent()) {
-            SalesOrder salesOrder = new SalesOrder(user.get(), employee.get(), saleDate, price, true);
+        if (client.isPresent() && employee.isPresent()) {
+            BigDecimal price = BigDecimal.ZERO;
+            Set<SalesOrderItem> salesOrderItems = new HashSet<>();
+            List<Vehicle> vehicles = new ArrayList<>();
+
             for(Integer vehicleId : vehicleIds){
                 Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
                 if(vehicle.isEmpty()){
@@ -49,13 +50,20 @@ public class SalesOrderServiceImpl implements SalesOrderService {
                     return null;
                 }
                 price = price.add(vehicle.get().getMarginPrice());
-                SalesOrderItem salesOrderItem = new SalesOrderItem(salesOrder, vehicle.get(), vehicle.get().getMarginPrice(), true);
-                salesOrderItems.add(salesOrderItem);
+                vehicles.add(vehicle.get());
             }
+
+            SalesOrder salesOrder = new SalesOrder(client.get(), employee.get(), saleDate, price, true);
+            for(Vehicle vehicle : vehicles){
+                SalesOrderItem salesOrderItem = new SalesOrderItem(salesOrder, vehicle, vehicle.getMarginPrice(), true);
+                salesOrderItems.add(salesOrderItem);
+                vehicle.setClient(client.get());
+            }
+
             salesOrder.setItems(salesOrderItems);
-            salesOrder.setFinalPrice(price);
             salesOrderRepository.save(salesOrder);
             salesOrderItemRepository.saveAll(salesOrder.getItems());
+            vehicleRepository.saveAll(vehicles);
             return salesOrder;
         }
         return null;
