@@ -37,23 +37,23 @@ public class SalonAppointmentServiceImpl implements SalonAppointmentService {
         Optional<User> employee= userRepository.findById(employeeId);
         Optional<Location> location = locationRepository.findById(locationId);
 
-        if(client.isPresent() && employee.isPresent() && location.isPresent())
-        {
-            SalonAppointment salonAppointment = new SalonAppointment(client.get(), employee.get(), location.get(),
-                    appointmentDate, type, SalonAppointmentStatus.SCHEDULED, true);
-            salonAppointment.setNotes(notes);
-            if(vehicleId!=null)
-            {
-                Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
-                vehicle.ifPresent(salonAppointment::setVehicle);
-            }else
-            {
-                salonAppointment.setVehicle(null);
+        if(client.isPresent() && employee.isPresent() && location.isPresent()){
+            if(employee.get().isActive() && location.get().isActive()){
+                SalonAppointment salonAppointment = new SalonAppointment(client.get(), employee.get(), location.get(),
+                        appointmentDate, type, SalonAppointmentStatus.SCHEDULED, true);
+                salonAppointment.setNotes(notes);
+                if(vehicleId!=null)
+                {
+                    Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
+                    vehicle.ifPresent(salonAppointment::setVehicle);
+                }else
+                {
+                    salonAppointment.setVehicle(null);
+                }
+                return salonAppointmentRepository.save(salonAppointment);
             }
-            return salonAppointmentRepository.save(salonAppointment);
         }
         return null;
-
     }
 
     @Override

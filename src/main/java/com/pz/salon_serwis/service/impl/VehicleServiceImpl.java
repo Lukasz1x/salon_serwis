@@ -33,8 +33,10 @@ public class VehicleServiceImpl implements VehicleService {
     {
         Optional<Location> location = locationRepository.findById(locationId);
         if(location.isPresent()){
-            Vehicle vehicle = new Vehicle(model, productionYear, vin, cataloguePrice, marginPrice, location.get(), LocalDateTime.now(), status, true);
-            return vehicleRepository.save(vehicle);
+            if(location.get().isActive()){
+                Vehicle vehicle = new Vehicle(model, productionYear, vin, cataloguePrice, marginPrice, location.get(), LocalDateTime.now(), status, true);
+                return vehicleRepository.save(vehicle);
+            }
         }
         return null;
     }

@@ -48,9 +48,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         if(serviceAppointment.isPresent()){
             Optional<User> client = userRepository.findById(serviceAppointment.get().getClient().getId());
             Optional<RepairOrder> repairOrder = repairOrderRepository.findByServiceAppointmentId(serviceAppointment.get().getId());
-            System.out.println("============");
-            System.out.println(repairOrder.isPresent());
-            System.out.println("============");
             if(client.isPresent() && repairOrder.isPresent()){
                 Invoice invoice = new Invoice(id, client.get(), LocalDate.now(), dueDate, totalAmount, repairOrder.get(), true);
                 return invoiceRepository.save(invoice);

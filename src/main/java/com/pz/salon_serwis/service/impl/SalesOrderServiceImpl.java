@@ -45,6 +45,9 @@ public class SalesOrderServiceImpl implements SalesOrderService {
                 if(vehicle.isEmpty()){
                     return null;
                 }
+                if(!vehicle.get().getActive()){
+                    return null;
+                }
                 price = price.add(vehicle.get().getMarginPrice());
                 SalesOrderItem salesOrderItem = new SalesOrderItem(salesOrder, vehicle.get(), vehicle.get().getMarginPrice(), true);
                 salesOrderItems.add(salesOrderItem);
