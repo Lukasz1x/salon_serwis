@@ -9,7 +9,10 @@ import com.pz.salon_serwis.repository.UserRepository;
 import com.pz.salon_serwis.service.RepairOrderService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -35,6 +38,26 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         if (serviceAppointment.isPresent() && mechanic.isPresent()){
             RepairOrder repairOrder = new RepairOrder(serviceAppointment.get(), mechanic.get(), new HashMap<>() , serviceAppointment.get().getAppointmentDate(),true);
             return  repairOrderRepository.save(repairOrder);
+        }
+        return null;
+    }
+
+    @Override
+    public RepairOrder addWorkDescription(int repairOrderId, Map<String, BigDecimal> description) {
+        Optional<RepairOrder> repairOrder = repairOrderRepository.findById(repairOrderId);
+        if(repairOrder.isPresent()){
+            repairOrder.get().setWorkDescription(description);
+            return repairOrderRepository.save(repairOrder.get());
+        }
+        return null;
+    }
+
+    @Override
+    public RepairOrder addFinalDate(int repairOrderId, LocalDateTime date) {
+        Optional<RepairOrder> repairOrder = repairOrderRepository.findById(repairOrderId);
+        if(repairOrder.isPresent()){
+            repairOrder.get().setFinishedAt(date);
+            return repairOrderRepository.save(repairOrder.get());
         }
         return null;
     }
