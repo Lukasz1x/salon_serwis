@@ -10,5 +10,6 @@ public interface ServiceAppointmentService {
     ServiceAppointment arrangeService(int clientId, int vehicleId, int locationId,
                                               ServiceType type, String issueDescription,
                                               LocalDateTime appointmentDate);
+    ServiceAppointment changeStatus(int serviceAppointmentId, String status);
     List<ServiceAppointment> findAllByAppointmentDateBetween(LocalDateTime beginDate, LocalDateTime endDate);
 }

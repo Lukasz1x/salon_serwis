@@ -50,6 +50,17 @@ public class ServiceAppointmentServiceImpl implements ServiceAppointmentService 
     }
 
     @Override
+    public ServiceAppointment changeStatus(int serviceAppointmentId, String status) {
+        Optional<ServiceAppointment> serviceAppointment = serviceAppointmentRepository.findById(serviceAppointmentId);
+        if(serviceAppointment.isPresent()){
+            serviceAppointment.get().setServiceStatus(ServiceStatus.valueOf(status));
+            serviceAppointment.get().setLastStatusChange(LocalDateTime.now());
+            return serviceAppointmentRepository.save(serviceAppointment.get());
+        }
+        return null;
+    }
+
+    @Override
     public List<ServiceAppointment> findAllByAppointmentDateBetween(LocalDateTime beginDate, LocalDateTime endDate) {
         List<ServiceAppointment> serviceAppointments = new ArrayList<>();
         serviceAppointmentRepository.findAllByAppointmentDateBetween(beginDate, endDate)
