@@ -87,6 +87,14 @@ public class Vehicle {
         this.id = id;
     }
 
+    public User getClient() {
+        return client;
+    }
+
+    public void setClient(User client) {
+        this.client = client;
+    }
+
     public String getModel() {
         return model;
     }
@@ -117,6 +125,14 @@ public class Vehicle {
 
     public void setEngineSpec(String engineSpec) {
         this.engineSpec = engineSpec;
+    }
+
+    public Map<String, String> getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(Map<String, String> equipment) {
+        this.equipment = equipment;
     }
 
     public BigDecimal getCataloguePrice() {
