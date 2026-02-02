@@ -23,48 +23,65 @@ public class UserController {
 
     @GetMapping("/stats")
     public ResponseEntity<?> getUsersStatistics(@AuthenticationPrincipal UserDetails userDetails){
-        String email = userDetails.getUsername();
-        Optional<User> user = userService.findByEmail(email);
-        List<User> users = null;
-        if(user.isPresent()){
-            if(user.get().getRole().name().equals("ADMIN")){
-                users = userService.getUsers();
-            }else{
-                users = List.of(user.get());
+        try{
+            String email = userDetails.getUsername();
+            Optional<User> user = userService.findByEmail(email);
+            List<User> users = null;
+            if(user.isPresent()){
+                if(user.get().getRole().name().equals("ADMIN")){
+                    users = userService.getUsers();
+                }else{
+                    users = List.of(user.get());
+                }
             }
-        }
-        if(users != null){
-            return ResponseEntity.ok(users);
+            if(users != null){
+                return ResponseEntity.ok(users);
+            }
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
         }
         return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/changeRole={roleName}&userId={userId}")
     public ResponseEntity<?> changeUserRole(@PathVariable String roleName, @PathVariable int userId){
-        User user = userService.changeRole(userId, roleName);
-        if(user != null){
-            return ResponseEntity.ok(user);
+        try{
+            User user = userService.changeRole(userId, roleName);
+            if(user != null){
+                return ResponseEntity.ok(user);
+            }
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
         }
+
         return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/changeLocation")
     public ResponseEntity<?> changeLocation(@RequestParam int userId, @RequestParam(required = false) Integer locationId){
-        User user = userService.changeLocation(userId, locationId);
-        if(user != null){
-            return ResponseEntity.ok(user);
+        try{
+            User user = userService.changeLocation(userId, locationId);
+            if(user != null){
+                return ResponseEntity.ok(user);
+            }
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable int id){
-        Optional<User> user = userService.findById(id);
-        if(user.isPresent()){
-            if(user.get().isActive()){
-                userService.deleteById(id);
-                return ResponseEntity.ok().build();
+        try{
+            Optional<User> user = userService.findById(id);
+            if(user.isPresent()){
+                if(user.get().isActive()){
+                    userService.deleteById(id);
+                    return ResponseEntity.ok().build();
+                }
             }
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
         }
         return ResponseEntity.notFound().build();
     }
