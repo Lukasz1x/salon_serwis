@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/vehicles")
@@ -49,6 +50,32 @@ public class VehicleController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
+    }
+
+    @PutMapping("/engine={vehicleId}")
+    public ResponseEntity<?> specifyEngine(@PathVariable int vehicleId, @RequestBody String engineSpecification){
+        try{
+            Vehicle vehicle = vehicleService.specifyEngine(vehicleId, engineSpecification);
+            if(vehicle != null){
+                return ResponseEntity.ok(vehicle);
+            }
+        }catch(Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PutMapping("/equipment={vehicleId}")
+    public ResponseEntity<?> specifyEquipment(@PathVariable int vehicleId, @RequestBody Map<String, String> equipment){
+        try{
+            Vehicle vehicle = vehicleService.specifyEquipment(vehicleId, equipment);
+            if(vehicle != null){
+                return ResponseEntity.ok(vehicle);
+            }
+        }catch(Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/{id}")

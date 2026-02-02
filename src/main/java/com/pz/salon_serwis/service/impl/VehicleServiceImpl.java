@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -36,6 +37,30 @@ public class VehicleServiceImpl implements VehicleService {
             if(location.get().isActive()){
                 Vehicle vehicle = new Vehicle(model, productionYear, vin, cataloguePrice, marginPrice, location.get(), LocalDateTime.now(), status, true);
                 return vehicleRepository.save(vehicle);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Vehicle specifyEngine(int vehicleId, String engineSpecification) {
+        Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
+        if(vehicle.isPresent()){
+            if(vehicle.get().getActive()){
+                vehicle.get().setEngineSpec(engineSpecification);
+                return vehicleRepository.save(vehicle.get());
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Vehicle specifyEquipment(int vehicleId, Map<String, String> equipment) {
+        Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
+        if(vehicle.isPresent()){
+            if(vehicle.get().getActive()){
+                vehicle.get().setEquipment(equipment);
+                return vehicleRepository.save(vehicle.get());
             }
         }
         return null;
