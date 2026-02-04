@@ -1,13 +1,11 @@
 package com.pz.salon_serwis.controller;
 
+import com.pz.salon_serwis.dto.LocationRequest;
 import com.pz.salon_serwis.model.Location;
 import com.pz.salon_serwis.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
@@ -45,5 +43,26 @@ public class LocationController {
         } catch(Exception e){
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<?> addLocation(@RequestBody LocationRequest locationRequest){
+        try{
+            Location location = locationService.addLocation(
+                    locationRequest.getName(),
+                    locationRequest.getPhone(),
+                    locationRequest.getStreet(),
+                    locationRequest.getCity(),
+                    locationRequest.getZipCode(),
+                    locationRequest.getLatitude(),
+                    locationRequest.getLongitude(),
+                    locationRequest.getLocationType());
+            if(location != null){
+                return ResponseEntity.ok(location);
+            }
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 }
