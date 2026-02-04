@@ -1,6 +1,9 @@
 package com.pz.salon_serwis.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.math.BigDecimal;
 
 @Entity
@@ -32,6 +35,7 @@ public class Location {
     private BigDecimal longitude;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "type", nullable = false)
     private LocationType locationType;
 
@@ -43,16 +47,15 @@ public class Location {
         this.isActive = true;
     }
 
-    public Location(boolean isActive, LocationType locationType, BigDecimal longitude, BigDecimal latitude, String zipCode, String city, String street, String phone, String lastName) {
-        this.isActive = isActive;
-        this.locationType = locationType;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.zipCode = zipCode;
-        this.city = city;
-        this.street = street;
+    public Location(String name, String phone, String street, String city, String zipCode, BigDecimal latitude, BigDecimal longitude, LocationType locationType) {
+        this.name = name;
         this.phone = phone;
-        this.name = lastName;
+        this.street = street;
+        this.city = city;
+        this.zipCode = zipCode;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.locationType = locationType;
     }
 
     public Location() {}
