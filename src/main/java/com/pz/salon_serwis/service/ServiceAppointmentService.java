@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ServiceAppointmentService {
+    List<ServiceAppointment> getAll();
     ServiceAppointment arrangeService(int clientId, int vehicleId, int locationId,
                                               ServiceType type, String issueDescription,
                                               LocalDateTime appointmentDate);
