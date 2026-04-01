@@ -29,6 +29,11 @@ public class ServiceAppointmentServiceImpl implements ServiceAppointmentService 
     }
 
     @Override
+    public List<ServiceAppointment> getAll(){
+        return serviceAppointmentRepository.findAll();
+    }
+
+    @Override
     @Transactional
     public ServiceAppointment arrangeService(int clientId, int vehicleId, int locationId,
                                               ServiceType type, String issueDescription,
