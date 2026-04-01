@@ -31,6 +31,11 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     }
 
     @Override
+    public List<SalesOrder> getAll(){
+        return salesOrderRepository.findAll();
+    }
+
+    @Override
     @Transactional
     public SalesOrder generateSalesOrder(int clientId, int employeeId, Set<Integer> vehicleIds, LocalDateTime saleDate) {
         Optional<User> client = userRepository.findById(clientId);
