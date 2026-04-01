@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,6 +24,16 @@ public class SalesOrderController {
     public SalesOrderController(SalesOrderService salesOrderService, UserService userService) {
         this.salesOrderService = salesOrderService;
         this.userService = userService;
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<SalesOrder>> getAllSalesOrders(){
+        try{
+            List<SalesOrder> salesOrders = salesOrderService.getAll();
+            return ResponseEntity.ok(salesOrders);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping("/generate")
