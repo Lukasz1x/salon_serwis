@@ -30,6 +30,11 @@ public class SalonAppointmentServiceImpl implements SalonAppointmentService {
     }
 
     @Override
+    public List<SalonAppointment> getAll(){
+        return salonAppointmentRepository.findAll();
+    }
+
+    @Override
     @Transactional
     public SalonAppointment arrangeAppointment(int clientId, int employeeId, int locationId, Integer vehicleId,
                                                SalonAppointmentType type, LocalDateTime appointmentDate, String notes) {
