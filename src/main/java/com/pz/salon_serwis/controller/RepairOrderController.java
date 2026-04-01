@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,6 +27,16 @@ public class RepairOrderController {
     public RepairOrderController(RepairOrderService repairOrderService, UserService userService) {
         this.repairOrderService = repairOrderService;
         this.userService = userService;
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<RepairOrder>> getAllRepairOrders(){
+        try{
+            List<RepairOrder> repairOrders = repairOrderService.getAll();
+            return ResponseEntity.ok(repairOrders);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping("/generate")
