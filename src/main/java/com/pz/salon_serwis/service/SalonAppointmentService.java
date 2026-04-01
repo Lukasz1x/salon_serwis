@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SalonAppointmentService {
+    List<SalonAppointment> getAll();
     SalonAppointment arrangeAppointment(int clientId, int employeeId, int locationId, Integer vehicleId,
                                         SalonAppointmentType type, LocalDateTime appointmentDate, String notes);
     SalonAppointment changeStatus(int salonAppointmentId, String status);
