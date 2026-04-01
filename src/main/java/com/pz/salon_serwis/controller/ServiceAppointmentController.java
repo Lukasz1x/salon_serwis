@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +24,16 @@ public class ServiceAppointmentController {
     public ServiceAppointmentController(ServiceAppointmentService serviceAppointmentService, UserService userService) {
         this.serviceAppointmentService = serviceAppointmentService;
         this.userService = userService;
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ServiceAppointment>> getAllServiceAppointments(){
+        try{
+            List<ServiceAppointment> serviceAppointments = serviceAppointmentService.getAll();
+            return ResponseEntity.ok(serviceAppointments);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping("/arrange")
