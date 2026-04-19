@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/location")
@@ -19,7 +21,17 @@ public class LocationController {
         this.locationService = locationService;
     }
 
-    @GetMapping("locationId={locationId}")
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllLocations(){
+        try{
+            List<Location> locations = locationService.getLocations();
+            return ResponseEntity.ok(locations);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/locationId={locationId}")
     public ResponseEntity<?> getLocation(@PathVariable("locationId") int locationId){
         try{
             Location location = locationService.findById(locationId);
@@ -32,7 +44,7 @@ public class LocationController {
         }
     }
 
-    @GetMapping("longitude={longitude}&latitude={latitude}")
+    @GetMapping("/longitude={longitude}&latitude={latitude}")
     public ResponseEntity<?> getLocation(@PathVariable("longitude") BigDecimal longitude, @PathVariable("latitude") BigDecimal latitude){
         try{
             Location location = locationService.findByLongLat(longitude, latitude);
@@ -59,6 +71,20 @@ public class LocationController {
                     locationRequest.getLocationType());
             if(location != null){
                 return ResponseEntity.ok(location);
+            }
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteLocationById(@PathVariable int id){
+        try{
+            Location location = locationService.findById(id);
+            if(location != null){
+                locationService.deleteById(id);
+                return ResponseEntity.ok().build();
             }
         }catch (Exception e){
             return ResponseEntity.internalServerError().build();

@@ -7,6 +7,8 @@ import com.pz.salon_serwis.service.LocationService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -14,6 +16,11 @@ public class LocationServiceImpl implements LocationService {
 
     public LocationServiceImpl(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
+    }
+
+    @Override
+    public List<Location> getLocations() {
+        return locationRepository.findAll();
     }
 
     @Override
@@ -30,5 +37,16 @@ public class LocationServiceImpl implements LocationService {
     public Location addLocation(String name, String phone, String street, String city, String zipCode, BigDecimal latitude, BigDecimal longitude, LocationType locationType) {
         Location location = new Location(name, phone, street, city, zipCode, latitude, longitude, locationType);
         return locationRepository.save(location);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        Optional<Location> location = locationRepository.findById(id);
+        if(location.isPresent()){
+            if(location.get().isActive()){
+                location.get().setActive(false);
+                locationRepository.save(location.get());
+            }
+        }
     }
 }
