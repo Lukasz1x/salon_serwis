@@ -5,7 +5,7 @@ import AppLayout from '@/components/layout/AppLayout';
 import LoginPage from '@/pages/auth/LoginPage';
 import RegisterPage from '@/pages/auth/RegisterPage';
 import HomePage from '@/pages/HomePage';
-// import UsersPage from '@/pages/admin/UsersPage';
+import UsersPage from '@/pages/admin/UsersPage';
 
 //TODO odkomentowac gdy stworzy sie te strony i zaimportowac lazy z 'react'
 // const LocationsPage         = lazy(() => import('@/pages/admin/LocationsPage'));
@@ -31,11 +31,11 @@ export default function AppRouter() {
                     </Route>
 
                     {/* Admin */}
-                    {/*<Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>*/}
-                    {/*    <Route path="/admin/users"     element={<UsersPage />} />*/}
-                    {/*    /!* <Route path="/admin/locations" element={<LocationsPage />} /> *!/*/}
-                    {/*    /!*<Route path="/admin/reports"   element={<ReportsPage />} />*!/*/}
-                    {/*</Route>*/}
+                    <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
+                        <Route path="/admin/users"     element={<UsersPage />} />
+                        {/* <Route path="/admin/locations" element={<LocationsPage />} /> */}
+                        {/*<Route path="/admin/reports"   element={<ReportsPage />} />*/}
+                    </Route>
 
                     {/* Sprzedawca */}
                     {/* <Route element={<ProtectedRoute allowedRoles={['SALES_REP']} />}>
