@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from '@/components/layout/ProtectedRoute';
 import AppLayout from '@/components/layout/AppLayout';
@@ -10,7 +10,6 @@ import UsersPage from '@/pages/admin/UsersPage';
 //TODO odkomentowac gdy stworzy sie te strony i zaimportowac lazy z 'react'
 // const LocationsPage         = lazy(() => import('@/pages/admin/LocationsPage'));
 // const ReportsPage            = lazy(() => import('@/pages/admin/ReportsPage'));
-// const VehiclesPage          = lazy(() => import('@/pages/salesrep/VehiclesPage'));
 // const SalonAppointmentsPage = lazy(() => import('@/pages/salesrep/SalonAppointmentsPage'));
 // const SalesOrdersPage       = lazy(() => import('@/pages/salesrep/SalesOrdersPage'));
 // const ServiceAppointmentsPage = lazy(() => import('@/pages/mechanic/ServiceAppointmentsPage'));
@@ -18,6 +17,8 @@ import UsersPage from '@/pages/admin/UsersPage';
 // const ClientServicePage     = lazy(() => import('@/pages/client/ServiceAppointmentPage'));
 // const ClientOfferPage       = lazy(() => import('@/pages/client/OfferPage'));
 // const ClientLocationsPage   = lazy(() => import('@/pages/client/LocationsPage'));
+
+const VehiclesPage          = lazy(() => import('@/pages/salesrep/VehiclesPage'));
 
 export default function AppRouter() {
     return (
@@ -38,11 +39,11 @@ export default function AppRouter() {
                     </Route>
 
                     {/* Sprzedawca */}
-                    {/* <Route element={<ProtectedRoute allowedRoles={['SALES_REP']} />}>
+                    {<Route element={<ProtectedRoute allowedRoles={['SALES_REP']} />}>
                         <Route path="/sales/vehicles"     element={<VehiclesPage />} />
-                        <Route path="/sales/appointments" element={<SalonAppointmentsPage />} />
-                        <Route path="/sales/orders"       element={<SalesOrdersPage />} />
-                    </Route> */}
+                        {/* <Route path="/sales/appointments" element={<SalonAppointmentsPage /> */} />
+                        {/* <Route path="/sales/orders"       element={<SalesOrdersPage />} / */}>
+                    </Route>}
 
                     {/* Mechanik */}
                     {/* <Route element={<ProtectedRoute allowedRoles={['MECHANIC']} />}>
