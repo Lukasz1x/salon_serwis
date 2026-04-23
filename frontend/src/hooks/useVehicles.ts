@@ -1,0 +1,31 @@
+import {useQuery, useMutation, useQueryClient} from '@tanstack/react-query';
+import {fetchVehicles, createVehicle,removeVehicle} from '../api/vehicle.api';
+import {VehicleRequest} from '../types/vehicle.types';
+
+export const useGetVehicles = (locationId: numer) => {
+    return useQuery({
+        queryKey: ['vehicles', locationId],
+        queryFn: () => fetchVehicles(locationId),
+        enabled: !!locationId,
+    });
+};
+
+export const useAddVehicle = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newVehicle: VehicleRequest) => createVehicle(newVehicle),
+        onSuccess: (_, variables) => {
+            queryClient.invalidateQueries({queryKey: ['vehicles', variables.locationId]})
+        }
+    });
+};
+
+export const useDeleteVehicle = (locationId: number) => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (vehicleId: number) => removeVehicle(vehicleId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['vehicles', locationId]})
+        }
+    })
+}
