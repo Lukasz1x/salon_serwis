@@ -5,11 +5,11 @@ import AddIcon from '@mui/icons-material/Add';
 import { useGetVehicles, useDeleteVehicle } from '../../hooks/useVehicles';
 import { AddVehicleDialog } from '../../components/vehicles/AddVehicleDialog';
 
-export const VehiclesPage = () => {
-    const locationdId = 1;
+export default function VehiclesPage() {
+    const locationId = 1;
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const {data:vehicles, isLoading, isError} = useGetVehicles(locationdId);
-    const {mutate: deleteVehicle} = useDeleteVehicle(locationdId);
+    const {data:vehicles, isLoading, isError} = useGetVehicles(locationId);
+    const {mutate: deleteVehicle} = useDeleteVehicle(locationId);
 
     const handleDelete = (id: number) => {
         if (window.confirm('Czy na pewno chcesz usunąć ten pojazd?')) {
@@ -20,7 +20,7 @@ export const VehiclesPage = () => {
     return (
         <Box sx={{ p: 3 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <Typography variant="h4" fontWeight="bold">Zarządzanie Flotą</Typography>
+                <Typography variant="h4" sx={{ fontWeight: 'bold' }}>Zarządzanie Flotą</Typography>
                 <Button variant="contained" startIcon={<AddIcon />} onClick={() => setIsDialogOpen(true)}>
                     Dodaj Pojazd
                 </Button>

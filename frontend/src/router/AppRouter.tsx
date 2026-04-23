@@ -18,7 +18,7 @@ import UsersPage from '@/pages/admin/UsersPage';
 // const ClientOfferPage       = lazy(() => import('@/pages/client/OfferPage'));
 // const ClientLocationsPage   = lazy(() => import('@/pages/client/LocationsPage'));
 
-const VehiclesPage          = lazy(() => import('@/pages/salesrep/VehiclesPage'));
+const VehiclesPage = lazy(() => import('@/pages/salesrep/VehiclesPage'));
 
 export default function AppRouter() {
     return (
@@ -41,8 +41,8 @@ export default function AppRouter() {
                     {/* Sprzedawca */}
                     {<Route element={<ProtectedRoute allowedRoles={['SALES_REP']} />}>
                         <Route path="/sales/vehicles"     element={<VehiclesPage />} />
-                        {/* <Route path="/sales/appointments" element={<SalonAppointmentsPage /> */} />
-                        {/* <Route path="/sales/orders"       element={<SalesOrdersPage />} / */}>
+                        {/* <Route path="/sales/appointments" element={<SalonAppointmentsPage />} /> */}
+                        {/* <Route path="/sales/orders"       element={<SalesOrdersPage />} /> */}
                     </Route>}
 
                     {/* Mechanik */}
