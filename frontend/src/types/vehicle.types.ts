@@ -6,7 +6,9 @@ export interface Vehicle {
     cataloguePrice: number;
     marginPrice: number;
     status: string;
-    isActive: boolean;
+    active: boolean;
+    engineSpec?: string;
+    equipment?: Record<string, string>
 }
 
 export interface VehicleRequest {

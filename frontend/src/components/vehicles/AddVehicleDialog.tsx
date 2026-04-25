@@ -36,16 +36,16 @@ export const AddVehicleDialog = ({open, onClose, locationId}: AddVehicleDialogPr
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-            <DialogTitle>Dodaj Nowy Pojazd</DialogTitle>
+            <DialogTitle>Dodaj nowy pojazd</DialogTitle>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <DialogContent dividers>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                         <TextField label="Model" {...register('model', { required: true })} error={!!errors.model} fullWidth />
                         <TextField label="VIN" {...register('vin', { required: true })} error={!!errors.vin} fullWidth />
-                        <TextField label="Rok Produkcji" type="number" {...register('productionYear', { required: true })} fullWidth />
+                        <TextField label="Rok produkcji" type="number" {...register('productionYear', { required: true })} fullWidth />
                         <Box sx={{ display: 'flex', gap: 2 }}>
-                            <TextField label="Cena Katalogowa" type="number" {...register('cataloguePrice')} fullWidth />
-                            <TextField label="Marża" type="number" {...register('marginPrice', { required: true })} fullWidth />
+                            <TextField label="Cena katalogowa" type="number" {...register('cataloguePrice')} fullWidth />
+                            <TextField label="Cena z marżą" type="number" {...register('marginPrice', { required: true })} fullWidth />
                         </Box>
                         <TextField select label="Status" defaultValue="AVAILABLE" {...register('status')} fullWidth>
                             {VEHICLE_STATUSES.map(status => (

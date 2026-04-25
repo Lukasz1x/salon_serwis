@@ -9,7 +9,7 @@ import UsersPage from '@/pages/admin/UsersPage';
 
 //TODO odkomentowac gdy stworzy sie te strony i zaimportowac lazy z 'react'
 // const LocationsPage         = lazy(() => import('@/pages/admin/LocationsPage'));
-// const ReportsPage            = lazy(() => import('@/pages/admin/ReportsPage'));
+//
 // const SalonAppointmentsPage = lazy(() => import('@/pages/salesrep/SalonAppointmentsPage'));
 // const SalesOrdersPage       = lazy(() => import('@/pages/salesrep/SalesOrdersPage'));
 // const ServiceAppointmentsPage = lazy(() => import('@/pages/mechanic/ServiceAppointmentsPage'));
@@ -19,7 +19,7 @@ import UsersPage from '@/pages/admin/UsersPage';
 // const ClientLocationsPage   = lazy(() => import('@/pages/client/LocationsPage'));
 
 const VehiclesPage = lazy(() => import('@/pages/salesrep/VehiclesPage'));
-
+const ReportsPage = lazy(() => import('@/pages/admin/ReportsPage'));
 export default function AppRouter() {
     return (
         <Suspense fallback={<div style={{ padding: 40, textAlign: 'center' }}>Ładowanie…</div>}>
@@ -35,7 +35,7 @@ export default function AppRouter() {
                     <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
                         <Route path="/admin/users"     element={<UsersPage />} />
                         {/* <Route path="/admin/locations" element={<LocationsPage />} /> */}
-                        {/*<Route path="/admin/reports"   element={<ReportsPage />} />*/}
+                        {<Route path="/admin/reports"   element={<ReportsPage />} />}
                     </Route>
 
                     {/* Sprzedawca */}
@@ -51,12 +51,12 @@ export default function AppRouter() {
                     </Route> */}
 
                     {/* Klient */}
-                    {/* <Route element={<ProtectedRoute allowedRoles={['CLIENT']} />}>
-                        <Route path="/client/salon"     element={<ClientSalonPage />} />
-                        <Route path="/client/service"   element={<ClientServicePage />} />
-                        <Route path="/client/offer"     element={<ClientOfferPage />} />
-                        <Route path="/client/locations" element={<ClientLocationsPage />} />
-                    </Route> */}
+                    {/*<Route element={<ProtectedRoute allowedRoles={['CLIENT']} />}>
+                        {<Route path="/client/salon"     element={<ClientSalonPage />} />}
+                        {<Route path="/client/service"   element={<ClientServicePage />} />}
+                        {<Route path="/client/offer"     element={<ClientOfferPage />} />}
+                        {<Route path="/client/locations" element={<ClientLocationsPage />} />}
+                    </Route>*/}
 
                     <Route path="/unauthorized" element={
                         <div style={{ padding: 40, textAlign: 'center', fontFamily: 'Arial, sans-serif' }}>
