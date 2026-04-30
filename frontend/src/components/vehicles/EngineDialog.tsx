@@ -7,10 +7,19 @@ interface EngineDialogProps {
     onClose: () => void;
     vehicleId: number | null;
     locationId: number;
+    initialEngine?: string
 }
 
-export const EngineDialog = ({ open, onClose, vehicleId, locationId }: EngineDialogProps) => {
-    const [engine, setEngine] = useState('');
+export const EngineDialog = ({ open, onClose, vehicleId, locationId, initialEngine }: EngineDialogProps) => {
+    const [engine, setEngine] = useState(initialEngine || '');
+
+    const [prevVehicleId, setPrevVehicleID] = useState(vehicleId);
+
+    if (vehicleId !== prevVehicleId) {
+        setPrevVehicleID(vehicleId);
+        setEngine(initialEngine || '');
+    }
+
     const { mutate: updateEngine, isPending } = useUpdateEngine(locationId);
 
     const handleSave = () => {

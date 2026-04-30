@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'; // <-- Usuwamy useEffect!
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Box, IconButton} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -9,10 +9,32 @@ interface EquipmentDialogProps {
     onClose: () => void;
     vehicleId: number | null;
     locationId: number;
+    initialEquipment?: Record<string, string>;
 }
 
-export const EquipmentDialog = ({ open, onClose, vehicleId, locationId }: EquipmentDialogProps) => {
-    const [items, setItems] = useState([{ key: '', value: '' }]);
+export const EquipmentDialog = ({ open, onClose, vehicleId, locationId, initialEquipment }: EquipmentDialogProps) => {
+
+    // 1. Pomocnicza funkcja: "Wyciągnij cechy z propa albo daj pustą linijkę"
+    const getInitialItems = () => {
+        if (initialEquipment && Object.keys(initialEquipment).length > 0) {
+            return Object.entries(initialEquipment).map(([key, value]) => ({ key, value }));
+        }
+        return [{ key: '', value: '' }];
+    };
+
+    // 2. Ładujemy początkowy stan
+    const [items, setItems] = useState(getInitialItems);
+
+    // 3. Stan pomocniczy do śledzenia, dla jakiego auta obecnie otwarte jest okienko
+    const [prevVehicleId, setPrevVehicleId] = useState(vehicleId);
+
+    // 4. MAGIA REACTA: Aktualizacja w locie (zastępuje useEffect)
+    // Jeśli ID auta się zmieniło (np. okienko otwarto dla innego pojazdu, albo je zamknięto)
+    if (vehicleId !== prevVehicleId) {
+        setPrevVehicleId(vehicleId); // Zapisujemy nowe ID
+        setItems(getInitialItems()); // Resetujemy formularz natychmiast!
+    }
+
     const { mutate: updateEquipment, isPending } = useUpdateEquipment(locationId);
 
     const handleAddRow = () => setItems([...items, { key: '', value: '' }]);
@@ -36,7 +58,8 @@ export const EquipmentDialog = ({ open, onClose, vehicleId, locationId }: Equipm
 
         updateEquipment({ id: vehicleId, equipment: equipmentRecord }, {
             onSuccess: () => {
-                setItems([{ key: '', value: '' }]); // Reset
+                // Skoro zmiana vehicleId na null w komponencie wyżej i tak
+                // wyresetuje nam formularz, wystarczy samo onClose()
                 onClose();
             }
         });
