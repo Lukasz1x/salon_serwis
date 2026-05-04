@@ -42,10 +42,10 @@ public class ServiceReportController {
 
             serviceAppointments.forEach(serviceAppointment -> {
                 ServiceStatus serviceStatus = serviceAppointment.getServiceStatus();
-                if (serviceStatus == ServiceStatus.SCHEDULED) {
+                if (serviceStatus == ServiceStatus.SCHEDULED || serviceStatus == ServiceStatus.CONFIRMED) {
                     counterOfScheduledRepairOrders.incrementAndGet();
                 }
-                else if (serviceStatus == ServiceStatus.CONFIRMED) {
+                else if (serviceStatus == ServiceStatus.COMPLETED) {
                     counterOfCompletedRepairOrders.incrementAndGet();
                 }
                 else {
