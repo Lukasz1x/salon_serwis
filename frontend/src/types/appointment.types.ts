@@ -6,10 +6,6 @@ export interface ServiceAppointmentRequest {
     appointmentDate: string;
 }
 
-export interface ServiceAppointment {
-
-}
-
 export interface SalonAppointmentRequest {
     employeeId: number;
     locationId: number;
