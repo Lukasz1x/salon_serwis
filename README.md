@@ -15,7 +15,7 @@ The frontend was developed with `TypeScript` and the `React 18` library. The use
 To run the application, the following components are required:
 - **Backend**: `Java Development Kit 21 (JDK 21)` and the `Maven` build tool, or an IDE with an integrated build system (e.g., IntelliJ IDEA by JetBrains).
 - **Frontend**: `Node.js` runtime environment and the `npm` package manager.
-- **Database**: A remotely hosted `PostgreSQL` database (e.g., on `neon.com`). You can also use a local database installation, though this requires configuration changes. It is recommended to insert accounts of types `ADMIN`, `SALES_REP` and `MECHANIC` to the provided database schema. This will allow thorough system testing.
+- **Database**: A remotely hosted `PostgreSQL` database (e.g., on `neon.com`). You can also use a local database installation, though this requires configuration changes. It is recommended to insert accounts of types `ADMIN`, `SALES_REP` and `MECHANIC` as well as at least one location to the provided database schema. This will allow thorough system testing.
 
 ### Running the application
 1. Clone the repository.
