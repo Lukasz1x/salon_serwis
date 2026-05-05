@@ -20,10 +20,10 @@ To run the application, the following components are required:
 ### Running the application
 1. Clone the repository.
 2. Set up environmental variables and access keys. Using an IDE to manage these variables is recommended so they remain hidden from the `src/main/resources/application.properties` file. The required variables for the system to work properly are:
-- `DB_CONNECT_URL`;
-- `DB_PASSWORD`;
-- `DB_USER`;
-- `JWT_SECRET`.
+- `DB_CONNECT_URL=jdbc:postgresql://<host>:<port>/<dbname>`
+- `DB_USER=<your_username>`
+- `DB_PASSWORD=<your_password>`
+- `JWT_SECRET=<your_secret>`.
 3. Start the backend. This must launch without errors to continue. You can run the `SalonSerwisApplication` class directly from your IDE, or use the terminal:
 ```bash
 mvn spring-boot:run
