@@ -9,6 +9,7 @@ import java.util.Map;
 
 public interface VehicleService {
     List<Vehicle> findVehiclesByLocationId(int locationId);
+    List<Vehicle> getVehiclesByClient(int clientId);
     Vehicle addVehicle(String model, Integer productionYear, String vin, BigDecimal cataloguePrice, BigDecimal marginPrice, Integer locationId, VehicleStatus status);
     Vehicle specifyEngine(int vehicleId, String engineSpecification);
     Vehicle specifyEquipment(int vehicleId, Map<String, String> equipment);

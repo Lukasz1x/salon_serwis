@@ -12,13 +12,16 @@ import UsersPage from '@/pages/admin/UsersPage';
 // const SalonAppointmentsPage = lazy(() => import('@/pages/salesrep/SalonAppointmentsPage'));
 // const SalesOrdersPage       = lazy(() => import('@/pages/salesrep/SalesOrdersPage'));
 // const ServiceAppointmentsPage = lazy(() => import('@/pages/mechanic/ServiceAppointmentsPage'));
-// const ClientSalonPage       = lazy(() => import('@/pages/client/SalonAppointmentPage'));
-// const ClientServicePage     = lazy(() => import('@/pages/client/ServiceAppointmentPage'));
 // const ClientLocationsPage   = lazy(() => import('@/pages/client/LocationsPage'));
 
 const VehiclesPage = lazy(() => import('@/pages/salesrep/VehiclesPage'));
 const ReportsPage = lazy(() => import('@/pages/admin/ReportsPage'));
+
 const ClientOfferPage       = lazy(() => import('@/pages/client/OfferPage'));
+const ClientSalonPage       = lazy(() => import('@/pages/client/SalonAppointmentPage'));
+const ClientSalonAppointmentSuccessPage = lazy(() => import('@/pages/client/SalonAppointmentSuccessPage'));
+const ClientServicePage     = lazy(() => import('@/pages/client/ServiceAppointmentPage'));
+const ClientServiceAppointmentSuccessPage = lazy(() => import('@/pages/client/ServiceAppointmentSuccessPage'));
 
 export default function AppRouter() {
     return (
@@ -52,8 +55,10 @@ export default function AppRouter() {
 
                     {/* Klient */}
                     {<Route element={<ProtectedRoute allowedRoles={['CLIENT']} />}>
-                        {/*<Route path="/client/salon"     element={<ClientSalonPage />} /> */}
-                        {/*<Route path="/client/service"   element={<ClientServicePage />} />*/}
+                        {<Route path="/client/salon"     element={<ClientSalonPage />} />}
+                        {<Route path="/client/salon-appointment-success" element={<ClientSalonAppointmentSuccessPage />} />}
+                        {<Route path="/client/service"   element={<ClientServicePage />} />}
+                        {<Route path="/client/service-appointment-success" element={<ClientServiceAppointmentSuccessPage />} />}
                         {<Route path="/client/offer"     element={<ClientOfferPage />} />}
                         {/*<Route path="/client/locations" element={<ClientLocationsPage />} />*/}
                     </Route>}

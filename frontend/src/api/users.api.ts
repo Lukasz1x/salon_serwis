@@ -15,4 +15,7 @@ export const usersApi = {
 
     deleteUser: (id: number) =>
         apiClient.delete(`/users/${id}`),
+
+    getEmployeesByLocationAndRole: (locationId: number, roleName: string) =>
+            apiClient.get<User[]>(`/users/location/${locationId}/role/${roleName}`).then(r => r.data),
 };

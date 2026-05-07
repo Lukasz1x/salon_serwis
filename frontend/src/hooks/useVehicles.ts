@@ -1,6 +1,13 @@
 import {useQuery, useMutation, useQueryClient} from '@tanstack/react-query';
-import {fetchVehicles, createVehicle, removeVehicle, updateVehicleEngine, updateVehicleEquipment} from '../api/vehicle.api';
+import {fetchMyVehicles, fetchVehicles, createVehicle, removeVehicle, updateVehicleEngine, updateVehicleEquipment} from '../api/vehicle.api';
 import {VehicleRequest} from '../types/vehicle.types';
+
+export const useMyVehicles = () => {
+    return useQuery({
+        queryKey: ['myVehicles'],
+        queryFn: fetchMyVehicles,
+    });
+};
 
 export const useGetVehicles = (locationId: number) => {
     return useQuery({

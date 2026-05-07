@@ -1,6 +1,11 @@
 import {apiClient} from './AxiosClient'
 import {Vehicle, VehicleRequest} from '../types/vehicle.types'
 
+export const fetchMyVehicles = async () => {
+    const response = await apiClient.get('/vehicles/my');
+    return response.data;
+};
+
 export const fetchVehicles = async (locationId: number) : Promise<Vehicle[]> => {
     const {data} = await apiClient.get(`/vehicles/location=${locationId}`);
     return data.filter((v: Vehicle) => v.active)

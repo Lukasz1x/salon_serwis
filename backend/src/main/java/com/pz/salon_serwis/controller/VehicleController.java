@@ -2,12 +2,15 @@ package com.pz.salon_serwis.controller;
 
 
 import com.pz.salon_serwis.dto.VehicleRequest;
+import com.pz.salon_serwis.model.User;
 import com.pz.salon_serwis.model.Vehicle;
+import com.pz.salon_serwis.repository.UserRepository;
 import com.pz.salon_serwis.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +18,12 @@ import java.util.Map;
 @RequestMapping("api/vehicles")
 public class VehicleController {
     private final VehicleService vehicleService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public VehicleController(VehicleService vehicleService) {
+    public VehicleController(VehicleService vehicleService, UserRepository userRepository) {
         this.vehicleService = vehicleService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/location={id}")
@@ -26,6 +31,21 @@ public class VehicleController {
     {
         List<Vehicle> vehicles = vehicleService.findVehiclesByLocationId(id);
         return ResponseEntity.ok(vehicles);
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<?> getMyVehicles(Principal principal) {
+        try {
+            String email = principal.getName();
+
+            User currentUser = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("Nie znaleziono użytkownika"));
+
+            List<Vehicle> myVehicles = vehicleService.getVehiclesByClient(currentUser.getId());
+            return ResponseEntity.ok(myVehicles);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Błąd autoryzacji: " + e.getMessage());
+        }
     }
 
     @PostMapping("/add")

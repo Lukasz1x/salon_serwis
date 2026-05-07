@@ -70,6 +70,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getUsersByLocationAndRole(int locationId, String roleName) {
+        return userRepository.findAllByLocationIdAndRole(locationId, UserRole.valueOf(roleName));
+    }
+
+    @Override
     public User changeRole(int userId, String roleName) {
         Optional<User> user = userRepository.findById(userId);
         if(user.isPresent()){

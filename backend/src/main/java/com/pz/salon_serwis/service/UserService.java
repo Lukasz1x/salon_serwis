@@ -12,6 +12,7 @@ public interface UserService {
     Optional<User> findByEmail(String email);
     void deleteById(int id);
     List<User> getUsers();
+    List<User> getUsersByLocationAndRole(int locationId, String roleName);
     User changeRole(int userId, String roleName);
     User changeLocation(int userId, Integer locationId);
 }

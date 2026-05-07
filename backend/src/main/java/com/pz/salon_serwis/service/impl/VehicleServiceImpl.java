@@ -30,6 +30,11 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    public List<Vehicle> getVehiclesByClient(int clientId) {
+        return vehicleRepository.findAllByClientIdAndIsActiveTrue(clientId);
+    }
+
+    @Override
     public Vehicle addVehicle(String model, Integer productionYear, String vin, BigDecimal cataloguePrice, BigDecimal marginPrice, Integer locationId, VehicleStatus status)
     {
         Optional<Location> location = locationRepository.findById(locationId);

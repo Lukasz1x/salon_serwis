@@ -85,4 +85,14 @@ public class UserController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/location/{locationId}/role/{roleName}")
+    public ResponseEntity<?> getUsersByLocationAndRole(@PathVariable int locationId, @PathVariable String roleName) {
+        try {
+            List<User> employees = userService.getUsersByLocationAndRole(locationId, roleName);
+            return ResponseEntity.ok(employees);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
+        }
+    }
 }
