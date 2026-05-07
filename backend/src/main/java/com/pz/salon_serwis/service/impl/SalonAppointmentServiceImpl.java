@@ -10,7 +10,9 @@ import com.pz.salon_serwis.service.SalonAppointmentService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -78,5 +80,12 @@ public class SalonAppointmentServiceImpl implements SalonAppointmentService {
         salonAppointmentRepository.findAllByAppointmentDateBetween(startDate, endDate)
                 .ifPresent(salonAppointments::addAll);
         return salonAppointments;
+    }
+
+    @Override
+    public List<SalonAppointment> getAppointmentsByLocationAndDate(int locationId, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
+        return salonAppointmentRepository.findAllByLocationIdAndAppointmentDateBetween(locationId, startOfDay, endOfDay);
     }
 }

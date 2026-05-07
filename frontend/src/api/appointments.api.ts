@@ -10,3 +10,17 @@ export const arrangeServiceAppointment = async (data: ServiceAppointmentRequest)
   const response = await apiClient.post('/serviceAppointments/arrange', data);
   return response.data;
 };
+
+export const fetchBookedSalonAppointments = async (locationId: number, date: string) => {
+  const { data } = await apiClient.get(`/salonAppointments/filter`, {
+    params: { locationId, date }
+  });
+  return data;
+};
+
+export const fetchBookedServiceAppointments = async (locationId: number, date: string) => {
+  const { data } = await apiClient.get(`/serviceAppointments/filter`, {
+    params: { locationId, date }
+  });
+  return data;
+};

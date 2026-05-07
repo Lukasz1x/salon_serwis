@@ -43,6 +43,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/salonAppointments/all").hasRole("SALES_REP")
                         .requestMatchers(HttpMethod.POST, "/api/salonAppointments/arrange").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.PUT, "/api/salonAppointments/**").hasRole("SALES_REP")
+                        .requestMatchers(HttpMethod.GET, "/api/salonAppointments/filter").hasAnyRole("CLIENT", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/serviceAppointments/filter").hasAnyRole("CLIENT", "ADMIN")
                         .requestMatchers("/api/salonReport/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/serviceAppointments/all").hasRole("MECHANIC")
                         .requestMatchers(HttpMethod.POST, "/api/serviceAppointments/arrange").hasRole("CLIENT")

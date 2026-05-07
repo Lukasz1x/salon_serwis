@@ -6,11 +6,13 @@ import com.pz.salon_serwis.model.User;
 import com.pz.salon_serwis.service.SalonAppointmentService;
 import com.pz.salon_serwis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,5 +75,14 @@ public class SalonAppointmentController {
             return ResponseEntity.internalServerError().build();
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<SalonAppointment>> getAppointmentsByLocationAndDate(
+            @RequestParam int locationId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+
+        List<SalonAppointment> appointments = salonAppointmentService.getAppointmentsByLocationAndDate(locationId, date);
+        return ResponseEntity.ok(appointments);
     }
 }

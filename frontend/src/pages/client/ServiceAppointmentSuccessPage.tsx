@@ -38,14 +38,8 @@ export default function ServiceAppointmentSuccessPage() {
                 <List disablePadding sx={{ textAlign: 'left' }}>
                     <ListItem>
                         <ListItemText
-                            primary="Serwis"
+                            primary="Warsztat serwisowy"
                             secondary={`${summaryData.locationName} (${summaryData.locationCity})`}
-                        />
-                    </ListItem>
-                    <ListItem>
-                        <ListItemText
-                            primary="Przydzielony mechanik"
-                            secondary={summaryData.employeeName}
                         />
                     </ListItem>
                     <ListItem>
