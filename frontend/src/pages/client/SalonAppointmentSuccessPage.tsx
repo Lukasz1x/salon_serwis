@@ -25,10 +25,10 @@ export default function SalonAppointmentSuccessPage() {
     return (
         <Container maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
             <Paper elevation={4} sx={{ p: 5, textAlign: 'center', borderRadius: 3 }}>
-                <Typography variant="h4" fontWeight="bold" color="success.main" gutterBottom>
+                <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'success.main', mb: 2 }}>
                     Wizyta umówiona!
                 </Typography>
-                <Typography color="text.secondary" paragraph>
+                <Typography sx={{ color: 'text.secondary', mb: 2 }}>
                     Dziękujemy za zaufanie. Poniżej znajduje się podsumowanie Twojego spotkania.
                 </Typography>
 

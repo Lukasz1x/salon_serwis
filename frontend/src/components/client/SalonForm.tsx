@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Box, Button, TextField, MenuItem, Alert, Typography } from '@mui/material';
+import { Box, Button, TextField, MenuItem, Alert } from '@mui/material';
 import { arrangeSalonAppointment } from '@/api/appointments.api';
 import { SalonAppointmentType } from '@/types/appointment.types';
 import { useLocations } from '@/hooks/useLocations';
@@ -145,7 +145,7 @@ export default function SalonForm() {
                 label="Data i godzina wizyty"
                 type="datetime-local"
                 defaultValue={defaultDate}
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
                 fullWidth
                 disabled={hasNoEmployees}
             />
@@ -159,15 +159,28 @@ export default function SalonForm() {
                 disabled={hasNoEmployees}
             />
 
-            <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                size="large"
-                disabled={loading || isEmployeesLoading || hasNoEmployees}
-            >
-                {loading ? 'Umawianie...' : 'Potwierdź wizytę'}
-            </Button>
+            <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
+                <Button
+                    variant="outlined"
+                    color="inherit"
+                    size="large"
+                    onClick={() => navigate('/home')}
+                    fullWidth
+                    disabled={loading}
+                >
+                    Anuluj
+                </Button>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    fullWidth
+                    disabled={loading || isEmployeesLoading || hasNoEmployees}
+                >
+                    {loading ? 'Umawianie...' : 'Potwierdź wizytę'}
+                </Button>
+            </Box>
         </Box>
     );
 }

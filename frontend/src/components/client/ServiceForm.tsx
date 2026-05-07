@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Box, Button, TextField, MenuItem, Alert, Typography } from '@mui/material';
+import { Box, Button, TextField, MenuItem, Alert } from '@mui/material';
 import { arrangeServiceAppointment } from '@/api/appointments.api';
 import { ServiceType } from '@/types/appointment.types';
 import { useLocations } from '@/hooks/useLocations';
@@ -47,8 +47,8 @@ export default function ServiceForm() {
         setLoading(true);
         setStatus(null);
 
-        const randomIndex = Math.floor(Math.random() * mechanics.length);
-        const assignedMechanic = mechanics[randomIndex];
+        const randomIndex = Math.floor(Math.random() * mechanics!.length);
+        const assignedMechanic = mechanics![randomIndex];
 
         const formData = new FormData(e.currentTarget);
         const selectedType = formData.get('type') as ServiceType;
@@ -91,9 +91,20 @@ export default function ServiceForm() {
 
     if (hasNoVehicles) {
         return (
-            <Alert severity="error">
-                Nie posiadasz żadnego samochodu zarejestrowanego w naszym systemie. Aby umówić się na serwis, skontaktuj się z nami telefonicznie.
-            </Alert>
+            <Box sx={{display: 'flex', flexDirection: 'column', gap: 3}}>
+                <Alert severity="error">
+                    Nie posiadasz żadnego samochodu zarejestrowanego w naszym systemie. Aby umówić się na serwis,
+                    skontaktuj się z nami telefonicznie.
+                </Alert>
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    size="large"
+                    onClick={() => navigate('/home')}
+                >
+                    Powrót do strony głównej
+                </Button>
+            </Box>
         );
     }
 
@@ -162,7 +173,7 @@ export default function ServiceForm() {
                 label="Proponowana data"
                 type="datetime-local"
                 defaultValue={defaultDate}
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
                 fullWidth
                 disabled={hasNoEmployees}
             />
@@ -177,15 +188,28 @@ export default function ServiceForm() {
                 disabled={hasNoEmployees}
             />
 
-            <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                size="large"
-                disabled={loading || isEmployeesLoading || hasNoEmployees || !selectedLocationId}
-            >
-                {loading ? 'Rejestracja zlecenia...' : 'Zgłoś do serwisu'}
-            </Button>
+            <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
+                <Button
+                    variant="outlined"
+                    color="inherit"
+                    size="large"
+                    onClick={() => navigate('/home')}
+                    fullWidth
+                    disabled={loading}
+                >
+                    Anuluj
+                </Button>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    fullWidth
+                    disabled={loading || isEmployeesLoading || hasNoEmployees || !selectedLocationId}
+                >
+                    {loading ? 'Rejestracja zlecenia...' : 'Zgłoś do serwisu'}
+                </Button>
+            </Box>
         </Box>
     );
 }
