@@ -22,6 +22,7 @@ const ClientSalonPage       = lazy(() => import('@/pages/client/SalonAppointment
 const ClientSalonAppointmentSuccessPage = lazy(() => import('@/pages/client/SalonAppointmentSuccessPage'));
 const ClientServicePage     = lazy(() => import('@/pages/client/ServiceAppointmentPage'));
 const ClientServiceAppointmentSuccessPage = lazy(() => import('@/pages/client/ServiceAppointmentSuccessPage'));
+const ClientAppointmentsPage     = lazy(() => import('@/pages/client/ClientAppointmentsPage'));
 
 export default function AppRouter() {
     return (
@@ -60,6 +61,7 @@ export default function AppRouter() {
                         {<Route path="/client/service"   element={<ClientServicePage />} />}
                         {<Route path="/client/service-appointment-success" element={<ClientServiceAppointmentSuccessPage />} />}
                         {<Route path="/client/offer"     element={<ClientOfferPage />} />}
+                        {<Route path="/client/my-appointments" element={<ClientAppointmentsPage />} />}
                         {/*<Route path="/client/locations" element={<ClientLocationsPage />} />*/}
                     </Route>}
 

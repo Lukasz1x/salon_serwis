@@ -24,3 +24,23 @@ export const fetchBookedServiceAppointments = async (locationId: number, date: s
   });
   return data;
 };
+
+export const fetchMySalonAppointments = async () => {
+  const { data } = await apiClient.get('/salonAppointments/my');
+  return data;
+};
+
+export const fetchMyServiceAppointments = async () => {
+  const { data } = await apiClient.get('/serviceAppointments/my');
+  return data;
+};
+
+export const cancelSalonAppointment = async (id: number) => {
+  const { data } = await apiClient.put(`/salonAppointments/${id}/cancel`);
+  return data;
+};
+
+export const cancelServiceAppointment = async (id: number) => {
+  const { data } = await apiClient.put(`/serviceAppointments/${id}/cancel`);
+  return data;
+};

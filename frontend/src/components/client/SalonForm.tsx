@@ -37,7 +37,10 @@ export default function SalonForm() {
     const { data: bookedAppointments = [] } = useQuery({
         queryKey: ['bookedSalonAppointments', selectedLocationId, selectedDate],
         queryFn: () => fetchBookedSalonAppointments(Number(selectedLocationId), selectedDate),
-        enabled: !!selectedLocationId && !!selectedDate, // Zapytanie wyjdzie tylko, jeśli oba parametry nie są puste
+        enabled: !!selectedLocationId && !!selectedDate,
+        refetchOnMount: 'always',
+        staleTime: 0,
+        refetchInterval: 15000,
     });
 
     const salonLocations = useMemo(() => {
@@ -55,7 +58,8 @@ export default function SalonForm() {
             const busyEmployeeIds = bookedAppointments
                 .filter((app: any) => {
                     const dateStr = String(app.appointmentDate).replace(' ', 'T');
-                    return dateStr.includes(`${selectedDate}T${time}`);
+                    const isNotCancelled = app.status !== 'CANCELLED';
+                    return dateStr.includes(`${selectedDate}T${time}`) && isNotCancelled;
                 })
                 .map((app: any) => {
                     const id = app.employee?.id || app.employeeId || app.user?.id;
@@ -106,6 +110,7 @@ export default function SalonForm() {
         try {
             await arrangeSalonAppointment(data as any);
             queryClient.invalidateQueries({ queryKey: ['bookedSalonAppointments'] });
+            queryClient.invalidateQueries({ queryKey: ['mySalonAppointments'] });
             const selectedLocation = salonLocations.find((l: any) => l.id === data.locationId);
             const selectedVehicle = vehicles?.find((v: any) => v.id === data.vehicleId);
 

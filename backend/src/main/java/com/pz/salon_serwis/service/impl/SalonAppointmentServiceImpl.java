@@ -88,4 +88,19 @@ public class SalonAppointmentServiceImpl implements SalonAppointmentService {
         LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
         return salonAppointmentRepository.findAllByLocationIdAndAppointmentDateBetween(locationId, startOfDay, endOfDay);
     }
+
+    @Override
+    public List<SalonAppointment> getAppointmentsByClient(Integer clientId) {
+        return salonAppointmentRepository.findAllByClientIdOrderByAppointmentDateDesc(clientId);
+    }
+
+    @Override
+    public Optional<SalonAppointment> findById(Integer id) {
+        return salonAppointmentRepository.findById(id);
+    }
+
+    @Override
+    public SalonAppointment save(SalonAppointment appointment) {
+        return salonAppointmentRepository.save(appointment);
+    }
 }

@@ -81,4 +81,19 @@ public class ServiceAppointmentServiceImpl implements ServiceAppointmentService 
         LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
         return serviceAppointmentRepository.findAllByLocationIdAndAppointmentDateBetween(locationId, startOfDay, endOfDay);
     }
+
+    @Override
+    public List<ServiceAppointment> getAppointmentsByClient(Integer clientId) {
+        return serviceAppointmentRepository.findAllByClientIdOrderByAppointmentDateDesc(clientId);
+    }
+
+    @Override
+    public Optional<ServiceAppointment> findById(Integer id) {
+        return serviceAppointmentRepository.findById(id);
+    }
+
+    @Override
+    public ServiceAppointment save(ServiceAppointment appointment) {
+        return serviceAppointmentRepository.save(appointment);
+    }
 }

@@ -72,6 +72,12 @@ const ROLE_CARDS: Record<UserRole, NavCard[]> = {
             icon: '🛠️',
         },
         {
+            label: 'Moje wizyty',
+            description: 'Sprawdź swoje zaplanowane wizyty i zgłoszenia',
+            path: '/client/my-appointments',
+            icon: '📅',
+        },
+        {
             label: 'Sprawdź ofertę salonu',
             description: 'Przeglądaj dostępne modele i cenniki',
             path: '/client/offer',

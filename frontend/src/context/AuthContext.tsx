@@ -7,6 +7,7 @@ import {
     ReactNode,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { AuthState, UserRole } from '@/types/auth.types';
 import {
     saveToken,
@@ -27,6 +28,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     const [authState, setAuthState] = useState<AuthState>(() => {
         const token = getToken();
@@ -54,9 +56,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const logout = useCallback(() => {
         removeToken();
+        queryClient.clear();
         setAuthState({ token: null, email: null, role: null, isAuthenticated: false });
         navigate('/login');
-    }, [navigate]);
+    }, [navigate, queryClient]);
 
     const hasRole = useCallback(
         (role: UserRole | UserRole[]): boolean => {

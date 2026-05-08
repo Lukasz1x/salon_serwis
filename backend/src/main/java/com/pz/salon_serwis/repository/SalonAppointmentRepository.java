@@ -15,4 +15,5 @@ public interface SalonAppointmentRepository extends JpaRepository<SalonAppointme
     void deleteById(int id);
     Optional<List<SalonAppointment>> findAllByAppointmentDateBetween(LocalDateTime startDate, LocalDateTime endDate);
     List<SalonAppointment> findAllByLocationIdAndAppointmentDateBetween(int locationId, LocalDateTime startDate, LocalDateTime endDate);
+    List<SalonAppointment> findAllByClientIdOrderByAppointmentDateDesc(Integer clientId);
 }

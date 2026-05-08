@@ -39,6 +39,9 @@ export default function ServiceForm() {
         queryKey: ['bookedServiceAppointments', selectedLocationId, selectedDate],
         queryFn: () => fetchBookedServiceAppointments(Number(selectedLocationId), selectedDate),
         enabled: !!selectedLocationId && !!selectedDate,
+        refetchOnMount: 'always',
+        staleTime: 0,
+        refetchInterval: 15000,
     });
 
     const serviceLocations = useMemo(() => {
@@ -59,7 +62,8 @@ export default function ServiceForm() {
         WORKING_HOURS.forEach(time => {
             const appointmentsAtThisTime = bookedAppointments.filter((app: any) => {
                 const dateStr = String(app.appointmentDate).replace(' ', 'T');
-                return dateStr.includes(`${selectedDate}T${time}`);
+                const isNotCancelled = app.serviceStatus !== 'CANCELLED';
+                return dateStr.includes(`${selectedDate}T${time}`) && isNotCancelled;
             }).length;
 
             if (appointmentsAtThisTime < maxCapacity) {
@@ -96,9 +100,8 @@ export default function ServiceForm() {
 
         try {
             await arrangeServiceAppointment(data);
-
             queryClient.invalidateQueries({ queryKey: ['bookedServiceAppointments'] });
-
+            queryClient.invalidateQueries({ queryKey: ['myServiceAppointments'] });
             const selectedLocation = serviceLocations.find((l: any) => l.id === locationId);
             const selectedVehicle = clientVehicles?.find((v: any) => v.id === vehicleId);
 
