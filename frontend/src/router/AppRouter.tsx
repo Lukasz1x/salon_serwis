@@ -10,11 +10,17 @@ import UsersPage from '@/pages/admin/UsersPage';
 //TODO odkomentowac gdy stworzy sie te strony i zaimportowac lazy z 'react'
 // const LocationsPage         = lazy(() => import('@/pages/admin/LocationsPage'));
 // const SalonAppointmentsPage = lazy(() => import('@/pages/salesrep/SalonAppointmentsPage'));
-// const SalesOrdersPage       = lazy(() => import('@/pages/salesrep/SalesOrdersPage'));
+//
 // const ClientLocationsPage   = lazy(() => import('@/pages/client/LocationsPage'));
 
-const VehiclesPage = lazy(() => import('@/pages/salesrep/VehiclesPage'));
+
+
 const ReportsPage = lazy(() => import('@/pages/admin/ReportsPage'));
+
+const VehiclesPage = lazy(() => import('@/pages/salesrep/VehiclesPage'));
+const SalesOrdersPage       = lazy(() => import('@/pages/salesrep/SalesOrdersPage'));
+
+const ServiceAppointmentsPage = lazy(() => import('@/pages/mechanic/ServiceAppointmentsPage'));
 
 const ClientOfferPage       = lazy(() => import('@/pages/client/OfferPage'));
 const ClientSalonPage       = lazy(() => import('@/pages/client/SalonAppointmentPage'));
@@ -22,8 +28,6 @@ const ClientSalonAppointmentSuccessPage = lazy(() => import('@/pages/client/Salo
 const ClientServicePage     = lazy(() => import('@/pages/client/ServiceAppointmentPage'));
 const ClientServiceAppointmentSuccessPage = lazy(() => import('@/pages/client/ServiceAppointmentSuccessPage'));
 const ClientAppointmentsPage     = lazy(() => import('@/pages/client/ClientAppointmentsPage'));
-
-const ServiceAppointmentsPage = lazy(() => import('@/pages/mechanic/ServiceAppointmentsPage'));
 
 export default function AppRouter() {
     return (
@@ -45,9 +49,9 @@ export default function AppRouter() {
 
                     {/* Sprzedawca */}
                     {<Route element={<ProtectedRoute allowedRoles={['SALES_REP']} />}>
-                        <Route path="/sales/vehicles"     element={<VehiclesPage />} />
+                        {<Route path="/sales/vehicles"     element={<VehiclesPage />} />}
                         {/* <Route path="/sales/appointments" element={<SalonAppointmentsPage />} /> */}
-                        {/* <Route path="/sales/orders"       element={<SalesOrdersPage />} /> */}
+                        {<Route path="/sales/orders"       element={<SalesOrdersPage />} />}
                     </Route>}
 
                     {/* Mechanik */}

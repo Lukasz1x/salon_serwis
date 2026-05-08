@@ -32,7 +32,6 @@ public class SalesOrder {
     private boolean isActive;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
-    @JsonIgnore
     private Set<SalesOrderItem> items;
 
     @PrePersist

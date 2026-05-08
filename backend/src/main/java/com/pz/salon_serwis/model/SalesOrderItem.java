@@ -1,5 +1,6 @@
 package com.pz.salon_serwis.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ public class SalesOrderItem {
 
     @ManyToOne
     @JoinColumn(name = "sales_order_id", nullable = false)
+    @JsonIgnore
     private SalesOrder order;
 
     @ManyToOne

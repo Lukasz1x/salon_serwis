@@ -95,4 +95,18 @@ public class UserController {
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
     }
+
+    @GetMapping("/clients")
+    public ResponseEntity<?> getAllClients() {
+        try {
+            List<User> allUsers = userService.getUsers();
+            List<User> clients = allUsers.stream()
+                    .filter(u -> "CLIENT".equals(u.getRole().name()))
+                    .toList();
+
+            return ResponseEntity.ok(clients);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

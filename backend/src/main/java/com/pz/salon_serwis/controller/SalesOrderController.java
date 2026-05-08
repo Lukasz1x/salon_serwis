@@ -50,6 +50,8 @@ public class SalesOrderController {
                 );
                 return ResponseEntity.ok(salesOrder);
             }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e){
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }

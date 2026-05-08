@@ -1,9 +1,6 @@
 package com.pz.salon_serwis.service.impl;
 
-import com.pz.salon_serwis.model.SalesOrder;
-import com.pz.salon_serwis.model.SalesOrderItem;
-import com.pz.salon_serwis.model.User;
-import com.pz.salon_serwis.model.Vehicle;
+import com.pz.salon_serwis.model.*;
 import com.pz.salon_serwis.repository.SalesOrderItemRepository;
 import com.pz.salon_serwis.repository.SalesOrderRepository;
 import com.pz.salon_serwis.repository.UserRepository;
@@ -38,40 +35,46 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Override
     @Transactional
     public SalesOrder generateSalesOrder(int clientId, int employeeId, Set<Integer> vehicleIds, LocalDateTime saleDate) {
-        Optional<User> client = userRepository.findById(clientId);
-        Optional<User> employee = userRepository.findById(employeeId);
+        // Zamiast Optional.isPresent() używamy orElseThrow - jeśli nie ma, od razu przerywa i krzyczy
+        User client = userRepository.findById(clientId)
+                .orElseThrow(() -> new IllegalArgumentException("Client not found in the database."));
+        User employee = userRepository.findById(employeeId)
+                .orElseThrow(() -> new IllegalArgumentException("Employee not found in the database."));
 
-        if (client.isPresent() && employee.isPresent()) {
-            BigDecimal price = BigDecimal.ZERO;
-            Set<SalesOrderItem> salesOrderItems = new HashSet<>();
-            List<Vehicle> vehicles = new ArrayList<>();
+        BigDecimal price = BigDecimal.ZERO;
+        Set<SalesOrderItem> salesOrderItems = new HashSet<>();
+        List<Vehicle> vehicles = new ArrayList<>();
 
-            for(Integer vehicleId : vehicleIds){
-                Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
-                if(vehicle.isEmpty()){
-                    return null;
-                }
-                if(!vehicle.get().getActive()){
-                    return null;
-                }
-                price = price.add(vehicle.get().getMarginPrice());
-                vehicles.add(vehicle.get());
+        for(Integer vehicleId : vehicleIds){
+            Vehicle vehicle = vehicleRepository.findById(vehicleId)
+                    .orElseThrow(() -> new IllegalArgumentException("Vehicle ID " + vehicleId + "not found."));
+
+            if(!vehicle.getActive()){
+                throw new IllegalArgumentException("Vehicle ID " + vehicleId + " is inactive and cannot be sold!");
             }
 
-            SalesOrder salesOrder = new SalesOrder(client.get(), employee.get(), saleDate, price, true);
-            for(Vehicle vehicle : vehicles){
-                SalesOrderItem salesOrderItem = new SalesOrderItem(salesOrder, vehicle, vehicle.getMarginPrice(), true);
-                salesOrderItems.add(salesOrderItem);
-                vehicle.setClient(client.get());
+            if(vehicle.getMarginPrice() == null) {
+                throw new IllegalArgumentException("Vehicle ID " + vehicleId + " has no set price!");
             }
-
-            salesOrder.setItems(salesOrderItems);
-            salesOrderRepository.save(salesOrder);
-            salesOrderItemRepository.saveAll(salesOrder.getItems());
-            vehicleRepository.saveAll(vehicles);
-            return salesOrder;
+            price = price.add(vehicle.getMarginPrice());
+            vehicles.add(vehicle);
         }
-        return null;
+
+        SalesOrder salesOrder = new SalesOrder(client, employee, saleDate, price, true);
+        salesOrderRepository.save(salesOrder);
+
+        for(Vehicle vehicle : vehicles){
+            SalesOrderItem salesOrderItem = new SalesOrderItem(salesOrder, vehicle, vehicle.getMarginPrice(), true);
+            salesOrderItems.add(salesOrderItem);
+            vehicle.setClient(client);
+            vehicle.setStatus(VehicleStatus.SOLD);
+        }
+
+        salesOrder.setItems(salesOrderItems);
+        salesOrderItemRepository.saveAll(salesOrderItems);
+        vehicleRepository.saveAll(vehicles);
+
+        return salesOrder;
     }
 
     @Override
