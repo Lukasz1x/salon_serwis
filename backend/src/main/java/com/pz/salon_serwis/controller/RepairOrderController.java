@@ -6,6 +6,7 @@ import com.pz.salon_serwis.model.User;
 import com.pz.salon_serwis.service.RepairOrderService;
 import com.pz.salon_serwis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,9 +40,28 @@ public class RepairOrderController {
         }
     }
 
+    @GetMapping("/appointment/{appointmentId}")
+    public ResponseEntity<?> getRepairOrderByAppointmentId(@PathVariable int appointmentId) {
+        try {
+            Optional<RepairOrder> repairOrder = repairOrderService.getByAppointmentId(appointmentId);
+            if (repairOrder.isPresent()) {
+                return ResponseEntity.ok(repairOrder.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Brak polecenia naprawy dla tej wizyty.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
+        }
+    }
+
     @PostMapping("/generate")
     public ResponseEntity<?> generateRepairOrder(@AuthenticationPrincipal UserDetails userDetails, @RequestBody RepairOrderRequest repairOrderRequest) {
         try{
+            Optional<RepairOrder> existingOrder = repairOrderService.getByAppointmentId(repairOrderRequest.getAppointmentId());
+            if (existingOrder.isPresent()) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Błąd: Polecenie naprawy dla tej wizyty już istnieje!");
+            }
+
             String email = userDetails.getUsername();
             Optional<User> user = userService.findByEmail(email);
             if(user.isPresent()){

@@ -11,7 +11,6 @@ import UsersPage from '@/pages/admin/UsersPage';
 // const LocationsPage         = lazy(() => import('@/pages/admin/LocationsPage'));
 // const SalonAppointmentsPage = lazy(() => import('@/pages/salesrep/SalonAppointmentsPage'));
 // const SalesOrdersPage       = lazy(() => import('@/pages/salesrep/SalesOrdersPage'));
-// const ServiceAppointmentsPage = lazy(() => import('@/pages/mechanic/ServiceAppointmentsPage'));
 // const ClientLocationsPage   = lazy(() => import('@/pages/client/LocationsPage'));
 
 const VehiclesPage = lazy(() => import('@/pages/salesrep/VehiclesPage'));
@@ -23,6 +22,8 @@ const ClientSalonAppointmentSuccessPage = lazy(() => import('@/pages/client/Salo
 const ClientServicePage     = lazy(() => import('@/pages/client/ServiceAppointmentPage'));
 const ClientServiceAppointmentSuccessPage = lazy(() => import('@/pages/client/ServiceAppointmentSuccessPage'));
 const ClientAppointmentsPage     = lazy(() => import('@/pages/client/ClientAppointmentsPage'));
+
+const ServiceAppointmentsPage = lazy(() => import('@/pages/mechanic/ServiceAppointmentsPage'));
 
 export default function AppRouter() {
     return (
@@ -50,9 +51,9 @@ export default function AppRouter() {
                     </Route>}
 
                     {/* Mechanik */}
-                    {/* <Route element={<ProtectedRoute allowedRoles={['MECHANIC']} />}>
+                    {<Route element={<ProtectedRoute allowedRoles={['MECHANIC']} />}>
                         <Route path="/service/appointments" element={<ServiceAppointmentsPage />} />
-                    </Route> */}
+                    </Route>}
 
                     {/* Klient */}
                     {<Route element={<ProtectedRoute allowedRoles={['CLIENT']} />}>

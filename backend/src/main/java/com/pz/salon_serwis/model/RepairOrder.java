@@ -1,5 +1,6 @@
 package com.pz.salon_serwis.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -30,7 +31,7 @@ public class RepairOrder {
     @Column(name = "ordered_at", nullable = false)
     private LocalDateTime orderedAt;
 
-    @Column(name = "finished_at", nullable = false)
+    @Column(name = "finished_at")
     private LocalDateTime finishedAt;
 
     @Column(columnDefinition = "BOOLEAN", name = "is_active", nullable = false)
@@ -50,6 +51,11 @@ public class RepairOrder {
         this.workDescription = workDescription;
         this.orderedAt = orderedAt;
         this.isActive = isActive;
+    }
+
+    @JsonProperty("appointmentId")
+    public Integer getAppointmentIdForJson() {
+        return this.serviceAppointment != null ? this.serviceAppointment.getId() : null;
     }
 
     public Integer getId() {

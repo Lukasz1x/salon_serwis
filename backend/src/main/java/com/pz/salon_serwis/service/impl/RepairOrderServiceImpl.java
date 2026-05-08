@@ -67,4 +67,9 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         }
         return null;
     }
+
+    @Override
+    public Optional<RepairOrder> getByAppointmentId(int appointmentId) {
+        return repairOrderRepository.findByServiceAppointmentId(appointmentId);
+    }
 }
