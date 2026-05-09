@@ -9,8 +9,6 @@ import UsersPage from '@/pages/admin/UsersPage';
 
 //TODO odkomentowac gdy stworzy sie te strony i zaimportowac lazy z 'react'
 // const LocationsPage         = lazy(() => import('@/pages/admin/LocationsPage'));
-// const SalonAppointmentsPage = lazy(() => import('@/pages/salesrep/SalonAppointmentsPage'));
-//
 // const ClientLocationsPage   = lazy(() => import('@/pages/client/LocationsPage'));
 
 
@@ -19,6 +17,7 @@ const ReportsPage = lazy(() => import('@/pages/admin/ReportsPage'));
 
 const VehiclesPage = lazy(() => import('@/pages/salesrep/VehiclesPage'));
 const SalesOrdersPage       = lazy(() => import('@/pages/salesrep/SalesOrdersPage'));
+const SalonAppointmentsPage = lazy(() => import('@/pages/salesrep/SalonAppointmentsPage'));
 
 const ServiceAppointmentsPage = lazy(() => import('@/pages/mechanic/ServiceAppointmentsPage'));
 
@@ -50,7 +49,7 @@ export default function AppRouter() {
                     {/* Sprzedawca */}
                     {<Route element={<ProtectedRoute allowedRoles={['SALES_REP']} />}>
                         {<Route path="/sales/vehicles"     element={<VehiclesPage />} />}
-                        {/* <Route path="/sales/appointments" element={<SalonAppointmentsPage />} /> */}
+                        {<Route path="/sales/appointments" element={<SalonAppointmentsPage />} />}
                         {<Route path="/sales/orders"       element={<SalesOrdersPage />} />}
                     </Route>}
 

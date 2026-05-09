@@ -30,3 +30,13 @@ export const fetchCurrentUserStats = async () => {
     const { data } = await apiClient.get('/users/stats');
     return data;
 };
+
+export const fetchAllSalonAppointments = async () => {
+    const { data } = await apiClient.get('/salonAppointments/all');
+    return data;
+};
+
+export const changeSalonAppointmentStatus = async (id: number, status: string) => {
+    const { data } = await apiClient.put(`/salonAppointments/changeStatus=${status}&appointmentId=${id}`);
+    return data;
+};
