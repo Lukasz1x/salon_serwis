@@ -149,11 +149,13 @@ export default function SalesOrdersPage() {
                         value={editDraft.vehicleId} label="Wybierz Pojazd"
                         onChange={(e) => setEditDraft({ vehicleId: e.target.value as number })}
                     >
-                        {vehicles.map((v: any) => (
-                            <MenuItem key={v.id} value={v.id}>
-                                {v.model} (VIN: {v.vin})
-                            </MenuItem>
-                        ))}
+                        {vehicles
+                            .filter((v: any) => v.status === 'AVAILABLE')
+                            .map((v: any) => (
+                                <MenuItem key={v.id} value={v.id}>
+                                    {v.model} (VIN: {v.vin})
+                                </MenuItem>
+                            ))}
                     </Select>
                 </FormControl>
                 <TextField
