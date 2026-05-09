@@ -46,7 +46,7 @@ export default function ServiceForm() {
 
     const serviceLocations = useMemo(() => {
         return locations?.filter((loc: any) =>
-            loc.locationType === 'SERVICE' || loc.locationType === 'HYBRID'
+            (loc.locationType === 'SERVICE' || loc.locationType === 'HYBRID') && loc.active === true
         ) || [];
     }, [locations]);
 

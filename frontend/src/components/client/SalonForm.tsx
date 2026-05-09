@@ -44,7 +44,7 @@ export default function SalonForm() {
     });
 
     const salonLocations = useMemo(() => {
-        return locations?.filter((loc: any) => loc.locationType === 'SALON' || loc.locationType === 'HYBRID') || [];
+        return locations?.filter((loc: any) => (loc.locationType === 'SALON' || loc.locationType === 'HYBRID') && loc.active === true) || [];
     }, [locations]);
 
     const hasNoEmployees = selectedLocationId !== '' && !isEmployeesLoading && (salesReps?.length === 0 || isEmployeesError);

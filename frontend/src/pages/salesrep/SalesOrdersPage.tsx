@@ -30,8 +30,8 @@ export default function SalesOrdersPage() {
     const queryClient = useQueryClient();
 
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-    const [selectedOrder, setSelectedOrder] = useState<any>(null); // Stan dla okna szczegółów
-    const [sortBy, setSortBy] = useState<string>('DATE_DESC'); // Stan sortowania
+    const [selectedOrder, setSelectedOrder] = useState<any>(null);
+    const [sortBy, setSortBy] = useState<string>('DATE_DESC');
 
     const [selectedClientId, setSelectedClientId] = useState<number | ''>('');
     const [orderItems, setOrderItems] = useState<{ vehicleId: number; price: number }[]>([]);
@@ -58,7 +58,8 @@ export default function SalesOrdersPage() {
     const { data: vehicles = [] } = useQuery({
         queryKey: ['availableVehicles', employeeLocationId],
         queryFn: () => fetchAvailableVehicles(employeeLocationId as number),
-        enabled: !!employeeLocationId
+        enabled: !!employeeLocationId,
+        refetchInterval: 30000
     });
 
     const sortedOrders = useMemo(() => {
@@ -150,7 +151,7 @@ export default function SalesOrdersPage() {
                         onChange={(e) => setEditDraft({ vehicleId: e.target.value as number })}
                     >
                         {vehicles
-                            .filter((v: any) => v.status === 'AVAILABLE')
+                            .filter((v: any) => v.status === 'AVAILABLE' && v.active === true)
                             .map((v: any) => (
                                 <MenuItem key={v.id} value={v.id}>
                                     {v.model} (VIN: {v.vin})
@@ -322,7 +323,9 @@ export default function SalesOrdersPage() {
                                 value={selectedClientId} label="Klient kupujący"
                                 onChange={(e) => setSelectedClientId(e.target.value as number)}
                             >
-                                {clients.map((client: any) => (
+                                {clients
+                                    .filter((client: any) => client.active === true)
+                                    .map((client: any) => (
                                     <MenuItem key={client.id} value={client.id}>
                                         {client.firstName} {client.lastName} (Tel: {client.phone})
                                     </MenuItem>
