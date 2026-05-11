@@ -8,6 +8,7 @@ const getStatusInfo = (status: string) => {
     switch (status) {
         case 'SCHEDULED': return { label: 'Zaplanowana', color: 'secondary' as const };
         case 'CONFIRMED': return { label: 'Potwierdzona', color: 'primary' as const };
+        case 'IN_PROGRESS': return { label: 'W trakcie', color: 'warning' as const };
         case 'COMPLETED': return { label: 'Zakończona', color: 'success' as const };
         case 'CANCELLED': return { label: 'Anulowana', color: 'error' as const };
         default: return { label: status || 'Brak statusu', color: 'default' as const };
