@@ -7,13 +7,11 @@ public class SaleInvoiceRequest {
     private String id;
     private int saleOrderId;
     private LocalDate dueDate;
-    private BigDecimal totalAmount;
 
-    public SaleInvoiceRequest(String id, int saleOrderId, LocalDate dueDate, BigDecimal totalAmount) {
+    public SaleInvoiceRequest(String id, int saleOrderId, LocalDate dueDate) {
         this.id = id;
         this.saleOrderId = saleOrderId;
         this.dueDate = dueDate;
-        this.totalAmount = totalAmount;
     }
 
     public String getId() {
@@ -40,11 +38,4 @@ public class SaleInvoiceRequest {
         this.dueDate = dueDate;
     }
 
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
-    }
 }

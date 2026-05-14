@@ -37,8 +37,7 @@ public class InvoiceController {
                         saleInvoiceRequest.getId(),
                         user.get().getId(),
                         saleInvoiceRequest.getSaleOrderId(),
-                        saleInvoiceRequest.getDueDate(),
-                        saleInvoiceRequest.getTotalAmount()
+                        saleInvoiceRequest.getDueDate()
                 );
                 return ResponseEntity.ok(invoice);
             }
@@ -55,8 +54,7 @@ public class InvoiceController {
             Invoice invoice = invoiceService.generateRepairInvoice(
                    repairInvoiceRequest.getId(),
                    repairInvoiceRequest.getAppointmentId(),
-                   repairInvoiceRequest.getDueDate(),
-                   repairInvoiceRequest.getTotalAmount()
+                   repairInvoiceRequest.getDueDate()
             );
             if (invoice == null)
             {

@@ -6,6 +6,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public interface InvoiceService {
-    Invoice generateSaleInvoice(String id, int clientId, int saleOrderId, LocalDate dueDate, BigDecimal totalAmount);
-    Invoice generateRepairInvoice(String id, int serviceAppointmentId, LocalDate dueDate, BigDecimal totalAmount);
+    Invoice generateSaleInvoice(String id, int clientId, int saleOrderId, LocalDate dueDate);
+    Invoice generateRepairInvoice(String id, int serviceAppointmentId, LocalDate dueDate);
 }

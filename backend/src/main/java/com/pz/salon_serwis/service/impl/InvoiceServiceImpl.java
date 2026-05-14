@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -27,14 +28,30 @@ public class InvoiceServiceImpl implements InvoiceService {
         this.invoiceRepository = invoiceRepository;
     }
 
+    private BigDecimal calculateTotalAmountFromSalesOrder(SalesOrder salesOrder) {
+        return  salesOrder.getFinalPrice();
+    }
+
+    private BigDecimal calculateTotalAmountFromRepairOrder(RepairOrder repairOrder) {
+        Map<String, BigDecimal> description = repairOrder.getWorkDescription();
+        return  description.values().stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
     @Override
     @Transactional
-    public Invoice generateSaleInvoice(String id, int clientId, int saleOrderId, LocalDate dueDate, BigDecimal totalAmount) {
+    public Invoice generateSaleInvoice(String id, int clientId, int saleOrderId, LocalDate dueDate) {
         Optional<SalesOrder> salesOrder = salesOrderRepository.findById(saleOrderId);
         Optional<User> client = userRepository.findById(clientId);
 
         if(salesOrder.isPresent() && client.isPresent()){
-            Invoice invoice = new Invoice(id, client.get(), LocalDate.now(), dueDate, totalAmount, salesOrder.get(), true);
+            Invoice invoice = new Invoice(
+                    id,
+                    client.get(),
+                    LocalDate.now(),
+                    dueDate,
+                    calculateTotalAmountFromSalesOrder(salesOrder.get()),
+                    salesOrder.get(),
+                    true);
             return invoiceRepository.save(invoice);
         }
         return null;
@@ -42,14 +59,21 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     @Transactional
-    public Invoice generateRepairInvoice(String id, int serviceAppointmentId, LocalDate dueDate, BigDecimal totalAmount) {
+    public Invoice generateRepairInvoice(String id, int serviceAppointmentId, LocalDate dueDate) {
         Optional<ServiceAppointment> serviceAppointment = serviceAppointmentRepository.findById(serviceAppointmentId);
 
         if(serviceAppointment.isPresent()){
             Optional<User> client = userRepository.findById(serviceAppointment.get().getClient().getId());
             Optional<RepairOrder> repairOrder = repairOrderRepository.findByServiceAppointmentId(serviceAppointment.get().getId());
             if(client.isPresent() && repairOrder.isPresent()){
-                Invoice invoice = new Invoice(id, client.get(), LocalDate.now(), dueDate, totalAmount, repairOrder.get(), true);
+                Invoice invoice = new Invoice(
+                        id,
+                        client.get(),
+                        LocalDate.now(),
+                        dueDate,
+                        calculateTotalAmountFromRepairOrder(repairOrder.get()),
+                        repairOrder.get(),
+                        true);
                 return invoiceRepository.save(invoice);
             }
         }
