@@ -9,6 +9,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.ByteArrayOutputStream;
+import java.util.stream.Collectors;
 
 @Service
 public class PdfGeneratorService {
@@ -33,8 +34,10 @@ public class PdfGeneratorService {
         context.setVariable("email", user.getEmail());
         context.setVariable("name", user.getFirstName() + " " + user.getLastName());
         context.setVariable("list",
-                invoice.getSalesOrder().getItems().stream()
-        );
+                invoice.getSalesOrder().getItems().stream().collect(Collectors.toMap(
+                        salesOrderItem -> salesOrderItem.getVehicle().getModel(),
+                        salesOrderItem -> salesOrderItem.getVehicle().getMarginPrice())
+                ));
         Location location = invoice.getSalesOrder().getEmployee().getLocation();
         context.setVariable("companyName", location.getName());
         context.setVariable("location", location.getStreet() + " " + location.getZipCode() + " " + location.getCity());
