@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    body { font-family: "DejaVu Sans", sans-serif; margin: 40px; color: #333; }
+    .header { display: flex; justify-content: space-between; margin-bottom: 30px; }
+    .company-name { font-size: 24px; font-weight: bold; color: #2c3e50; }
+    .invoice-title { font-size: 20px; text-align: right; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th { background-color: #2c3e50; color: white; padding: 10px; text-align: left; }
+    td { padding: 8px 10px; border-bottom: 1px solid #ddd; }
+    .total-row { font-weight: bold; background-color: #f5f5f5; }
+    .footer { margin-top: 40px; font-size: 12px; color: #888; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    th:nth-child(1), td:nth-child(1) { width: 8%;  text-align: center; }
+    th:nth-child(2), td:nth-child(2) { width: 52%; text-align: left;   }
+    th:nth-child(3), td:nth-child(3) { width: 10%; text-align: center; }
+    th:nth-child(4), td:nth-child(4) { width: 30%; text-align: right;  }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <div class="company-name" th:text="${companyName}"></div>
+    <div th:text="${location}"></div>
+  </div>
+  <div class="invoice-title">
+    <div>INVOICE</div>
+    <div th:text="'No: ' + ${id}"></div>
+    <div th:text="'Issue date: ' + ${issueDate}"></div>
+    <div th:text="'Due date: ' + ${dueDate}"></div>
+  </div>
+</div>
+
+<div>
+  <strong>Bill to:</strong><br/>
+  <span th:text="${name}"></span><br/>
+  <span th:text="${email}"></span><br/>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>No.</th>
+    <th>Description</th>
+    <th>Qty</th>
+    <th>Unit price</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="item, stat : ${list}">
+    <td th:text="${stat.index + 1}"></td>
+    <td th:text="${item.getKey()}"></td>
+    <td th:text="1"></td>
+    <td th:text="${#numbers.formatDecimal(item.getValue(), 1, 2)} + ' PLN'"></td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr class="total-row">
+    <td colspan="3">TOTAL DUE:</td>
+    <td th:text="${#numbers.formatDecimal(totalAmount, 1, 2)} + ' PLN'"></td>
+  </tr>
+  </tfoot>
+</table>
+<div class="footer">
+  This document was generated electronically.
+</div>
+</body>
+</html>
