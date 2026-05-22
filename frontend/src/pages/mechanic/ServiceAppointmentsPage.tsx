@@ -30,6 +30,9 @@ import {
     addWorkDescription,
     addFinalDate
 } from '@/api/mechanic.api';
+import {InvoiceRepairRequest} from "@/types/invoice.type.ts";
+import {createRepairInvoice, getServiceOrderInvoiceBytes} from "@/api/invoice.api.ts";
+import {openPdfInNewTab} from "@/utils/pdfUtils.ts";
 
 const STATUSES = [
     { value: 'SCHEDULED', label: 'Zaplanowana', color: 'warning' as const },
@@ -199,6 +202,23 @@ export default function ServiceAppointmentsPage() {
             finishRepairMutation.mutate({ appId: currentApp.id, orderId: currentApp.repairOrder.id });
         }
     };
+
+    const handleGenerateInvoice = async () => {
+        const request: InvoiceRepairRequest = {
+            id: "FFE/"
+                + currentApp?.repairOrder?.id
+                + "/"
+                + dayjs().format('DD/MM/YY'),
+            appointmentId: currentApp?.id,
+            dueDate: dayjs()
+                .add(30, "days")
+                .format('YYYY-MM-DDTHH:mm:ss')
+        };
+
+        const invoice = await createRepairInvoice(request);
+        const blob = await getServiceOrderInvoiceBytes(invoice.id);
+        openPdfInNewTab(blob);
+    }
 
     if (isAppsLoading || isOrdersLoading) return <Typography sx={{ p: 4 }}>Ładowanie systemu...</Typography>;
 
@@ -411,7 +431,7 @@ export default function ServiceAppointmentsPage() {
                                 )}
 
                                 {currentStatus === 'COMPLETED' && (
-                                    <Button fullWidth variant="contained" color="secondary" size="large" onClick={() => alert("Miejsce dla Krzyśka")}>
+                                    <Button fullWidth variant="contained" color="secondary" size="large" onClick={handleGenerateInvoice}>
                                         Wygeneruj fakturę
                                     </Button>
                                 )}

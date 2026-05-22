@@ -25,6 +25,9 @@ import {
     CreateOrderRequest,
     fetchCurrentUserStats
 } from '@/api/salon.api';
+import {createSaleInvoice, getSalesOrderInvoiceBytes} from "@/api/invoice.api.ts";
+import {openPdfInNewTab} from "@/utils/pdfUtils.ts";
+import {InvoiceSaleRequest} from "@/types/invoice.type.ts";
 
 export default function SalesOrdersPage() {
     const queryClient = useQueryClient();
@@ -137,6 +140,24 @@ export default function SalesOrdersPage() {
         };
         createOrderMutation.mutate(payload);
     };
+
+    const handleGenerateInvoice = async () => {
+        console.log(selectedOrder);
+        const request: InvoiceSaleRequest = {
+            id: "FFD/"
+                + selectedOrder.id
+                + "/"
+                + dayjs().format('DD/MM/YY'),
+            clientId: selectedOrder.client.id,
+            saleOrderId: selectedOrder.id,
+            dueDate: dayjs().add(30, "days").format('YYYY-MM-DDTHH:mm:ss')
+        };
+        console.log("REQUEST", request);
+        const invoice = await createSaleInvoice(request)
+        console.log("INVOICE", invoice);
+        const blob = await getSalesOrderInvoiceBytes(invoice.id)
+        openPdfInNewTab(blob)
+    }
 
     const renderEditRow = () => {
         const selectedV = vehicles.find((v: any) => v.id === editDraft.vehicleId);
@@ -298,7 +319,7 @@ export default function SalesOrdersPage() {
                         <DialogActions sx={{ p: 3, pt: 1 }}>
                             <Button
                                 fullWidth variant="contained" color="secondary" size="large"
-                                onClick={() => alert("Miejsce dla Krzyśka - Generowanie faktury VAT")}
+                                onClick={handleGenerateInvoice}
                             >
                                 Generuj fakturę
                             </Button>
