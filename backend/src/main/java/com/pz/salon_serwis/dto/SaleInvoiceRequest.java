@@ -5,11 +5,13 @@ import java.time.LocalDate;
 
 public class SaleInvoiceRequest {
     private String id;
+    private int clientId;
     private int saleOrderId;
     private LocalDate dueDate;
 
-    public SaleInvoiceRequest(String id, int saleOrderId, LocalDate dueDate) {
+    public SaleInvoiceRequest(String id, int clientId,int saleOrderId, LocalDate dueDate) {
         this.id = id;
+        this.clientId = clientId;
         this.saleOrderId = saleOrderId;
         this.dueDate = dueDate;
     }
@@ -38,4 +40,8 @@ public class SaleInvoiceRequest {
         this.dueDate = dueDate;
     }
 
+    public int getClientId() {
+        return clientId;
+    }
+    public void setClientId(int clientId) {this.clientId = clientId;}
 }

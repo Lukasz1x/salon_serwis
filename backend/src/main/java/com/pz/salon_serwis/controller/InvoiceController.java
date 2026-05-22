@@ -32,18 +32,15 @@ public class InvoiceController {
     }
 
     @PostMapping("/generateSale")
-    public ResponseEntity<?> generateSaleInvoice(@AuthenticationPrincipal UserDetails userDetails, @RequestBody SaleInvoiceRequest saleInvoiceRequest) {
+    public ResponseEntity<?> generateSaleInvoice(@RequestBody SaleInvoiceRequest saleInvoiceRequest) {
         try
         {
-            String email = userDetails.getUsername();
-            Optional<User> user = userService.findByEmail(email);
-            if(user.isPresent()){
-                Invoice invoice = invoiceService.generateSaleInvoice(
-                        saleInvoiceRequest.getId(),
-                        user.get().getId(),
-                        saleInvoiceRequest.getSaleOrderId(),
-                        saleInvoiceRequest.getDueDate()
-                );
+            Invoice invoice = invoiceService.generateSaleInvoice(
+                saleInvoiceRequest.getId(),
+                saleInvoiceRequest.getClientId(),
+                saleInvoiceRequest.getSaleOrderId(),
+                saleInvoiceRequest.getDueDate());
+            if (invoice != null) {
                 return ResponseEntity.ok(invoice);
             }
         }catch (Exception e)
