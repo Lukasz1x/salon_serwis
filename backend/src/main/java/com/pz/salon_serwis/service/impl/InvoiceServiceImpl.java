@@ -79,4 +79,12 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
         return null;
     }
+
+    @Override
+    public Invoice getInvoiceById(String id) {
+        Optional<Invoice> invoice = invoiceRepository.findById(id);
+        return invoice.orElse(null);
+    }
+
+
 }

@@ -8,4 +8,5 @@ import java.time.LocalDate;
 public interface InvoiceService {
     Invoice generateSaleInvoice(String id, int clientId, int saleOrderId, LocalDate dueDate);
     Invoice generateRepairInvoice(String id, int serviceAppointmentId, LocalDate dueDate);
+    Invoice getInvoiceById(String id);
 }
