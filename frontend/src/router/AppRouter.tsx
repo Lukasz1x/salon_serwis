@@ -8,8 +8,7 @@ import HomePage from '@/pages/HomePage';
 import UsersPage from '@/pages/admin/UsersPage';
 
 //TODO odkomentowac gdy stworzy sie te strony i zaimportowac lazy z 'react'
-// const LocationsPage         = lazy(() => import('@/pages/admin/LocationsPage'));
-// const ClientLocationsPage   = lazy(() => import('@/pages/client/LocationsPage'));
+// const ClientLocationsPage         = lazy(() => import('@/pages/admin/ClientLocationsPage'));
 
 
 
@@ -28,6 +27,8 @@ const ClientServicePage     = lazy(() => import('@/pages/client/ServiceAppointme
 const ClientServiceAppointmentSuccessPage = lazy(() => import('@/pages/client/ServiceAppointmentSuccessPage'));
 const ClientAppointmentsPage     = lazy(() => import('@/pages/client/ClientAppointmentsPage'));
 
+const ClientLocationsPage   = lazy(() => import('@/pages/client/ClientLocationsPage.tsx'));
+
 export default function AppRouter() {
     return (
         <Suspense fallback={<div style={{ padding: 40, textAlign: 'center' }}>Ładowanie…</div>}>
@@ -42,7 +43,7 @@ export default function AppRouter() {
                     {/* Admin */}
                     <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
                         <Route path="/admin/users"     element={<UsersPage />} />
-                        {/* <Route path="/admin/locations" element={<LocationsPage />} /> */}
+                        {/* <Route path="/admin/locations" element={<ClientLocationsPage />} /> */}
                         {<Route path="/admin/reports"   element={<ReportsPage />} />}
                     </Route>
 
@@ -66,7 +67,7 @@ export default function AppRouter() {
                         {<Route path="/client/service-appointment-success" element={<ClientServiceAppointmentSuccessPage />} />}
                         {<Route path="/client/offer"     element={<ClientOfferPage />} />}
                         {<Route path="/client/my-appointments" element={<ClientAppointmentsPage />} />}
-                        {/*<Route path="/client/locations" element={<ClientLocationsPage />} />*/}
+                        {<Route path="/client/locations" element={<ClientLocationsPage />} />}
                     </Route>}
 
                     <Route path="/unauthorized" element={
