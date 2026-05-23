@@ -28,6 +28,7 @@ const ClientServiceAppointmentSuccessPage = lazy(() => import('@/pages/client/Se
 const ClientAppointmentsPage     = lazy(() => import('@/pages/client/ClientAppointmentsPage'));
 
 const ClientLocationsPage   = lazy(() => import('@/pages/client/ClientLocationsPage.tsx'));
+const LocationsPage         = lazy(() => import('@/pages/admin/LocationsPage.tsx'));
 
 export default function AppRouter() {
     return (
@@ -43,7 +44,7 @@ export default function AppRouter() {
                     {/* Admin */}
                     <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
                         <Route path="/admin/users"     element={<UsersPage />} />
-                        {/* <Route path="/admin/locations" element={<ClientLocationsPage />} /> */}
+                        {<Route path="/admin/locations" element={<LocationsPage />} /> }
                         {<Route path="/admin/reports"   element={<ReportsPage />} />}
                     </Route>
 

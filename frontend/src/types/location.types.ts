@@ -12,3 +12,14 @@ export interface Location{
     locationType: LocationType;
     active: boolean;
 }
+
+export interface LocationRequest {
+    name: string;
+    phone: string;
+    street:string;
+    city: string;
+    zipCode: string;
+    latitude: number;
+    longitude: number;
+    locationType: LocationType;
+}
