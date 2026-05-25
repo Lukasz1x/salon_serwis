@@ -32,6 +32,7 @@ export function AddLocationModal({ onClose, onSave }: Props) {
         if (!form.street.trim())  e.street   = 'Pole wymagane';
         if (!form.city.trim())    e.city     = 'Pole wymagane';
         if (!form.zipCode.trim()) e.zipCode  = 'Pole wymagane';
+        if (!form.phone.trim())    e.phone     = 'Pole wymagane';
         if (!hasPin)              e.latitude = 'Kliknij na mapę aby wybrać lokalizację';
         setErrors(e);
         return Object.keys(e).length === 0;
@@ -66,6 +67,7 @@ export function AddLocationModal({ onClose, onSave }: Props) {
                         <label style={addStyles.label}>Telefon</label>
                         <input style={addStyles.input} value={form.phone}
                                onChange={e => set('phone', e.target.value)} placeholder="+48 000 000 000" />
+                        {errors.phone && <span style={addStyles.error}>{errors.phone}</span>}
                     </div>
                     <div style={{ ...addStyles.field, gridColumn: '1 / -1' }}>
                         <label style={addStyles.label}>Ulica i numer *</label>

@@ -7,8 +7,12 @@ import "leaflet/dist/leaflet.css"
 
 
 const createIcon = (type: LocationType) => {
-    const isSalon = type === 'SALON';
-    const color = isSalon ? "#1a6bff" : "#ff5c1a";
+    const color = type === 'SALON' ? "#1a6bff"
+        : type === 'HYBRID' ? "#7c3aed"
+            : "#ff5c1a";
+    const letter = type === 'SALON' ? "S"
+        : type === 'HYBRID' ? "H"
+            : "R";
     const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="48" viewBox="0 0 36 48">
       <defs>
@@ -20,7 +24,7 @@ const createIcon = (type: LocationType) => {
             fill="${color}" filter="url(#shadow)"/>
       <circle cx="18" cy="18" r="9" fill="white" opacity="0.95"/>
       <text x="18" y="22" font-size="11" font-family="sans-serif" font-weight="700"
-            fill="${color}" text-anchor="middle">${isSalon ? "S" : "R"}</text>
+            fill="${color}" text-anchor="middle">${letter}</text>
     </svg>`;
 
     return L.divIcon({
@@ -34,6 +38,7 @@ const createIcon = (type: LocationType) => {
 
 const SALON_ICON = createIcon('SALON');
 const SERWIS_ICON = createIcon('SERVICE');
+const HYBRID_ICON = createIcon('HYBRID');
 
 function FitBounds({ locations }: { locations: Location[] }) {
     const map = useMap();
@@ -57,6 +62,9 @@ const STYLES = `
     --serwis: #ff5c1a;
     --serwis-light: #fff0ea;
     --serwis-mid: #ff8a5c;
+    --hybrid: #7c3aed;
+    --hybrid-light: #f3eeff;
+    --hybrid-mid: #a78bfa;
     --bg: #f5f5f3;
     --surface: #ffffff;
     --border: #e2e2de;
@@ -202,6 +210,12 @@ const STYLES = `
     border-color: var(--serwis);
     color: var(--serwis);
   }
+  
+  .filter-btn--hybrid.active {
+    background: var(--hybrid-light);
+    border-color: var(--hybrid);
+    color: var(--hybrid);
+  }
 
   .filter-count {
     background: currentColor;
@@ -216,6 +230,7 @@ const STYLES = `
   }
   .filter-btn--salon.active .filter-count { color: var(--salon-light); }
   .filter-btn--serwis.active .filter-count { color: var(--serwis-light); }
+  .filter-btn--hybrid.active .filter-count { color: var(--hybrid-light); }
 
   .filter-btn--all {
     margin-left: auto;
@@ -270,6 +285,7 @@ const STYLES = `
   .result-card:hover { background: var(--bg); }
   .result-card.active { background: var(--salon-light); }
   .result-card.active.serwis { background: var(--serwis-light); }
+  .result-card.active.hybrid { background: var(--hybrid-light); }
 
   .result-card__type {
     font-size: 0.7rem;
@@ -281,6 +297,7 @@ const STYLES = `
 
   .result-card__type--salon { color: var(--salon); }
   .result-card__type--serwis { color: var(--serwis); }
+  .result-card__type--hybrid { color: var(--hybrid); }
 
   .result-card__name {
     font-family: 'Syne', sans-serif;
@@ -304,6 +321,7 @@ const STYLES = `
   }
 
   .result-card.serwis .result-card__phone { color: var(--serwis); }
+  .result-card.hybrid .result-card__phone { color: var(--hybrid); }
 
   .result-card__stripe {
     position: absolute;
@@ -314,6 +332,7 @@ const STYLES = `
 
   .result-card__stripe--salon { background: var(--salon); }
   .result-card__stripe--serwis { background: var(--serwis); }
+  .result-card__stripe--hybrid { background: var(--hybrid); }
 
   .empty-state {
     flex: 1;
@@ -407,6 +426,7 @@ export default function ClientLocationsPage() {
     const [query, setQuery] = useState("");
     const [showSalon, setShowSalon] = useState(true);
     const [showSerwis, setShowSerwis] = useState(true);
+    const [showHybrid, setShowHybrid] = useState(true);
     const [activeId, setActiveId] = useState<number | null>(null);
     const markerRefs = useRef<Record<number, L.Marker>>({});
     const stylesInjected = useRef(false);
@@ -422,6 +442,7 @@ export default function ClientLocationsPage() {
     const filtered = allLocations.filter((loc) => {
         if (!showSalon && loc.locationType === 'SALON') return false;
         if (!showSerwis && loc.locationType === 'SERVICE') return false;
+        if (!showHybrid && loc.locationType === 'HYBRID') return false;
         if (!query.trim()) return true;
         const q = query.toLowerCase();
         return (
@@ -434,6 +455,7 @@ export default function ClientLocationsPage() {
 
     const salonCount = filtered.filter((l) => l.locationType === 'SALON').length;
     const serwisCount = filtered.filter((l) => l.locationType === 'SERVICE').length;
+    const hybridCount = filtered.filter((l) => l.locationType === 'HYBRID').length;
 
     const handleCardClick = useCallback((loc: Location) => {
         setActiveId(loc.id);
@@ -488,10 +510,20 @@ export default function ClientLocationsPage() {
                         <span className="filter-count">{serwisCount}</span>
                     </button>
 
-                    {(!showSalon || !showSerwis || query) && (
+                    <button
+                        className={`filter-btn filter-btn--hybrid ${showHybrid ? "active" : ""}`}
+                        onClick={() => setShowHybrid((v) => !v)}
+                    >
+                        <span className="filter-btn__dot" style={{ background: "#7c3aed" }} />
+                        Salon+Serwis
+                        <span className="filter-count">{hybridCount}</span>
+                    </button>
+
+
+                    {(!showSalon || !showSerwis || !showHybrid || query) && (
                         <button
                             className="filter-btn filter-btn--all"
-                            onClick={() => { setShowSalon(true); setShowSerwis(true); setQuery(""); }}
+                            onClick={() => { setShowSalon(true); setShowSerwis(true); setShowHybrid(true); setQuery(""); }}
                         >
                             Wyczyść filtry
                         </button>
@@ -515,16 +547,21 @@ export default function ClientLocationsPage() {
                         </div>
                     ) : (
                         filtered.map((loc) => {
-                            const isSalon = loc.locationType === 'SALON';
+                            const typeKey = loc.locationType === 'SALON' ? "salon"
+                                : loc.locationType === 'HYBRID' ? "hybrid"
+                                    : "serwis";
+                            const typeLabel = loc.locationType === 'SALON' ? "Salon"
+                                : loc.locationType === 'HYBRID' ? "Salon+Serwis"
+                                    : "Serwis";
                             return (
                                 <div
                                     key={loc.id}
-                                    className={`result-card ${activeId === loc.id ? "active" : ""} ${isSalon ? "" : "serwis"}`}
+                                    className={`result-card ${activeId === loc.id ? "active" : ""} ${typeKey}`}
                                     onClick={() => handleCardClick(loc)}
                                 >
-                                    <div className={`result-card__stripe result-card__stripe--${isSalon ? "salon" : "serwis"}`} />
-                                    <div className={`result-card__type result-card__type--${isSalon ? "salon" : "serwis"}`}>
-                                        {isSalon ? "Salon" : "Serwis"}
+                                    <div className={`result-card__stripe result-card__stripe--${typeKey}`} />
+                                    <div className={`result-card__type result-card__type--${typeKey}`}>
+                                        {typeLabel}
                                     </div>
                                     <div className="result-card__name">{loc.name}</div>
                                     <div className="result-card__addr">
@@ -566,7 +603,9 @@ export default function ClientLocationsPage() {
                                 <Marker
                                     key={loc.id}
                                     position={[loc.latitude, loc.longitude]}
-                                    icon={loc.locationType === 'SALON' ? SALON_ICON : SERWIS_ICON}
+                                    icon={loc.locationType === 'SALON' ? SALON_ICON
+                                        : loc.locationType === 'HYBRID' ? HYBRID_ICON
+                                            : SERWIS_ICON}
                                     ref={(ref) => {
                                         if (ref) markerRefs.current[loc.id] = ref;
                                     }}
@@ -579,12 +618,12 @@ export default function ClientLocationsPage() {
                                             <div
                                                 className="popup-type"
                                                 style={{
-                                                    color: loc.locationType === 'SALON'
-                                                        ? "var(--salon)"
-                                                        : "var(--serwis)",
+                                                    color: loc.locationType === 'SALON' ? "var(--salon)"
+                                                        : loc.locationType === 'HYBRID' ? "var(--hybrid)"
+                                                            : "var(--serwis)",
                                                 }}
                                             >
-                                                {loc.locationType === 'SALON' ? "Salon" : "Serwis"}
+                                                {loc.locationType === 'SALON' ? "Salon" : loc.locationType === 'HYBRID' ? "Salon+Serwis" :"Serwis"}
                                             </div>
                                             <div className="popup-name">{loc.name}</div>
                                             <div className="popup-addr">
@@ -596,9 +635,9 @@ export default function ClientLocationsPage() {
                                             <div
                                                 className="popup-phone"
                                                 style={{
-                                                    color: loc.locationType === 'SALON'
-                                                        ? "var(--salon)"
-                                                        : "var(--serwis)",
+                                                    color: loc.locationType === 'SALON' ? "var(--salon)"
+                                                        : loc.locationType === 'HYBRID' ? "var(--hybrid)"
+                                                            : "var(--serwis)",
                                                 }}
                                             >
                                                 {loc.phone}
