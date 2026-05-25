@@ -1,14 +1,8 @@
-export const openPdfInNewTab = (blob: Blob) => {
+export const downloadPdf = (blob: Blob, filename?: string) => {
     const url = URL.createObjectURL(blob)
-    const newTab = window.open(url, '_blank')
-
-    if (newTab) {
-        newTab.addEventListener('load', () => {URL.revokeObjectURL(url)})
-    } else {
-        const a = document.createElement('a')
-        a.href = url
-        a.download = 'invoice.pdf'
-        a.click()
-        URL.revokeObjectURL(url)
-    }
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename ?? 'invoice.pdf'
+    a.click()
+    URL.revokeObjectURL(url)
 }

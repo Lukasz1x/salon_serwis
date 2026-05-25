@@ -32,7 +32,7 @@ import {
 } from '@/api/mechanic.api';
 import {InvoiceRepairRequest} from "@/types/invoice.type.ts";
 import {createRepairInvoice, getServiceOrderInvoiceBytes} from "@/api/invoice.api.ts";
-import {openPdfInNewTab} from "@/utils/pdfUtils.ts";
+import {downloadPdf} from "@/utils/pdfUtils.ts";
 
 const STATUSES = [
     { value: 'SCHEDULED', label: 'Zaplanowana', color: 'warning' as const },
@@ -216,8 +216,8 @@ export default function ServiceAppointmentsPage() {
         };
 
         const invoice = await createRepairInvoice(request);
-        const blob = await getServiceOrderInvoiceBytes(invoice.id);
-        openPdfInNewTab(blob);
+        const {blob, filename} = await getServiceOrderInvoiceBytes(invoice.id);
+        downloadPdf(blob,filename);
     }
 
     if (isAppsLoading || isOrdersLoading) return <Typography sx={{ p: 4 }}>Ładowanie systemu...</Typography>;

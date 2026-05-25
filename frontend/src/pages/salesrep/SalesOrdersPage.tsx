@@ -26,7 +26,7 @@ import {
     fetchCurrentUserStats
 } from '@/api/salon.api';
 import {createSaleInvoice, getSalesOrderInvoiceBytes} from "@/api/invoice.api.ts";
-import {openPdfInNewTab} from "@/utils/pdfUtils.ts";
+import {downloadPdf} from "@/utils/pdfUtils.ts";
 import {InvoiceSaleRequest} from "@/types/invoice.type.ts";
 
 export default function SalesOrdersPage() {
@@ -152,8 +152,8 @@ export default function SalesOrdersPage() {
             dueDate: dayjs().add(30, "days").format('YYYY-MM-DDTHH:mm:ss')
         };
         const invoice = await createSaleInvoice(request)
-        const blob = await getSalesOrderInvoiceBytes(invoice.id)
-        openPdfInNewTab(blob)
+        const {blob, filename} = await getSalesOrderInvoiceBytes(invoice.id)
+        downloadPdf(blob,filename)
     }
 
     const renderEditRow = () => {
