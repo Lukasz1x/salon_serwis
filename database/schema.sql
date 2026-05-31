@@ -63,8 +63,8 @@ CREATE TYPE service_type AS ENUM (
 
 CREATE TYPE service_status AS ENUM (
   'SCHEDULED',
-  'CONFIRMED',
-  'COMPLETED',
+  'IN_PROGRESS',
+  'READY_FOR_PICKUP',
   'CANCELLED'
 );
 
@@ -177,3 +177,4 @@ CREATE TABLE invoices (
     is_active BOOLEAN NOT NULL DEFAULT TRUE
     CONSTRAINT check_invoice_source CHECK ((sales_order_id IS NOT NULL AND repair_order_id IS NULL) OR (sales_order_id IS NULL AND repair_order_id IS NOT NULL))
 );
+
